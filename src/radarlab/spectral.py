@@ -52,3 +52,13 @@ def migrating_cube(target, model=None):
         moved = replace(target, range_m=target.range_m + target.receding_m_s * t)
         out[k] = target_cube(moved, p, allow_alias=True)[k]
     return out
+
+
+def tdm_compensate(snapshot, doppler_hz, transmit_offsets_s):
+    from .core import finite
+
+    x = finite(snapshot, ndim=1)
+    offsets = finite(transmit_offsets_s, real=True, ndim=1)
+    if x.shape != offsets.shape or not np.isfinite(doppler_hz):
+        raise ValueError("timing offset per virtual channel required")
+    return x * np.exp(-2j * np.pi * doppler_hz * offsets)

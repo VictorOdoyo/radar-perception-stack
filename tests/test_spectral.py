@@ -26,3 +26,11 @@ def test_range_migration_is_zero_for_stationary_scatterer():
 
     target = Target(receding_m_s=0)
     assert np.allclose(m.migrating_cube(target), target_cube(target))
+
+
+def test_tdm_compensation_removes_known_motion_phase():
+    offsets = np.repeat([0, 50e-6], 4)
+    fd = 3000.0
+    truth = np.exp(1j * np.arange(8) * 0.2)
+    measured = truth * np.exp(2j * np.pi * fd * offsets)
+    assert np.allclose(m.tdm_compensate(measured, fd, offsets), truth)
