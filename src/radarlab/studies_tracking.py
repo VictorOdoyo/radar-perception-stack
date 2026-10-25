@@ -129,3 +129,7 @@ def study(name, scale=1, seed=42, drop_indices=(), turn=False):
 
 def nominal(scale=1, seed=42):
     return study("multi-object-tracking", scale, seed)
+
+
+def gap(scale=1, seed=42):
+    return study("tracking-short-gap", scale, seed, range(10 * scale, 13 * scale))
