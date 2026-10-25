@@ -11,3 +11,9 @@ def test_detection_csv_requires_si_headers_validity_and_time_order(tmp_path):
     p.write_text(",".join(m.COLUMNS) + "\n0,30,2,0,.3,.02,true\n")
     with pytest.raises(ValueError):
         m.read_csv(p)
+
+
+def test_detection_csv_roundtrip_retains_uncertainty_and_canonical_bytes(tmp_path):
+    rows = [dict(zip(m.COLUMNS, [0.0, 30.0, 2.0, 0.2, 0.3, 0.02, True], strict=True))]
+    p = m.write_csv(rows, tmp_path / "detections.csv")
+    assert b"\r\n" not in p.read_bytes() and m.read_csv(p) == rows

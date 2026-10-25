@@ -32,3 +32,18 @@ def read_csv(path):
     if not rows:
         raise ValueError("nonempty detection CSV required")
     return rows
+
+
+def write_csv(rows, path):
+    import csv
+    from pathlib import Path
+
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=COLUMNS, lineterminator="\n")
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({**row, "valid": int(row["valid"])})
+    read_csv(path)
+    return path
