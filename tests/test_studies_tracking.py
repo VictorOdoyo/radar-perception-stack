@@ -12,3 +12,9 @@ def test_short_gap_keeps_prediction_and_frame_validity_separate():
     a = r["arrays"]
     assert not a["valid_frame"][11]
     assert a["detection_count"][11] == 0 and a["track_count"][11] == 2
+
+
+def test_long_gap_deletes_stale_tracks_and_records_identity_change():
+    r = m.long_gap()
+    assert r["summary"]["identity_switches"] >= 2
+    assert r["arrays"]["track_count"][17] == 0

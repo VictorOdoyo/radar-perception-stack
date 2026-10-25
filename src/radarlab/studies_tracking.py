@@ -133,3 +133,7 @@ def nominal(scale=1, seed=42):
 
 def gap(scale=1, seed=42):
     return study("tracking-short-gap", scale, seed, range(10 * scale, 13 * scale))
+
+
+def long_gap(scale=1, seed=42):
+    return study("tracking-long-gap", scale, seed, range(10 * scale, 19 * scale))
