@@ -191,3 +191,7 @@ def oscillator(scale=1, seed=42):
 
 def nonlinear(scale=1, seed=42):
     return study("chirp-nonlinearity", "nonlinear", scale, seed)
+
+
+def low_snr(scale=1, seed=42):
+    return study("low-snr-detection", "low-snr", scale, seed)

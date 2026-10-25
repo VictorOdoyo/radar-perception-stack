@@ -45,3 +45,8 @@ def test_phase_noise_scene_keeps_finite_raw_iq():
 
 def test_nonlinear_chirp_study_records_variant():
     assert m.nonlinear()["parameters"]["variant"] == "nonlinear"
+
+
+def test_low_snr_study_scores_any_missing_target_explicitly():
+    r = m.low_snr()
+    assert r["summary"]["matched_targets"] + r["summary"]["missed_targets"] == 1
