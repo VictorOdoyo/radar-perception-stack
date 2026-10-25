@@ -190,3 +190,46 @@ def spatial_spectra(scale=1, seed=42):
             "MUSIC source count is explicitly assumed; not estimated from ground truth inside a perception pipeline."
         ],
     )
+
+
+def ego_consensus(scale=1, seed=42):
+    from .core import stream
+    from .egomotion import fit_velocity, robust_velocity
+
+    angles = np.linspace(-0.7, 0.7, 60 * scale)
+    truth = np.array([1.0, 12.0])
+    design = -np.column_stack([np.sin(angles), np.cos(angles)])
+    velocity = design @ truth + stream(seed, "ego-measurement").normal(0, 0.05, len(angles))
+    velocity[::5] += 5
+    least = fit_velocity(angles, velocity)
+    robust = robust_velocity(angles, velocity, seed=seed)
+    pred = design @ robust["velocity_m_s"]
+    a = {
+        "angle_deg": np.rad2deg(angles),
+        "measured_m_s": velocity,
+        "robust_m_s": pred,
+        "truth_m_s": design @ truth,
+        "inliers": robust["inliers"],
+    }
+    return make(
+        "ego-motion-consensus",
+        {"seed": seed, "ego_velocity_m_s": truth.tolist(), "outlier_step": 5, "noise_std_m_s": 0.05},
+        {
+            "least_squares_error_m_s": float(np.linalg.norm(least["velocity_m_s"] - truth)),
+            "robust_error_m_s": float(np.linalg.norm(robust["velocity_m_s"] - truth)),
+        },
+        a,
+        [
+            curve(
+                "Static-world Doppler consensus",
+                "angle_deg",
+                [
+                    ("measured_m_s", "Measured incl moving objects"),
+                    ("truth_m_s", "Static truth"),
+                    ("robust_m_s", "Consensus fit"),
+                ],
+                "Azimuth (deg)",
+                "Receding radial velocity (m/s)",
+            )
+        ],
+    )

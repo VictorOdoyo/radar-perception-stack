@@ -21,3 +21,8 @@ def test_os_study_retains_detection_under_reference_contamination():
 def test_spatial_spectrum_study_retains_complex_covariance():
     r = m.spatial_spectra()
     assert np.iscomplexobj(r["arrays"]["covariance"])
+
+
+def test_robust_ego_study_outperforms_unfiltered_least_squares():
+    r = m.ego_consensus()["summary"]
+    assert r["robust_error_m_s"] < r["least_squares_error_m_s"]
