@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from radarlab import frontend as m
 
@@ -46,3 +47,8 @@ def test_chirp_dropout_keeps_explicit_unavailable_rows():
     a = m.drop_chirps(x, 0.5)
     assert 30 < np.sum(a["valid"]) < 70
     assert np.all(a["iq"][~a["valid"]] == 0)
+
+
+def test_inverse_iq_rejects_nonfinite_sensor_samples():
+    with pytest.raises(ValueError):
+        m.correct_iq([complex(np.nan, 0)])

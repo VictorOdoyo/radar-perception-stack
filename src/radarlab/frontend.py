@@ -33,9 +33,9 @@ def iq_imbalance(signal, gain_ratio=1.05, phase_error_rad=0.03):
 
 
 def correct_iq(signal, gain_ratio=1.05, phase_error_rad=0.03):
-    from .core import positive
+    from .core import finite, positive
 
-    x = np.asarray(signal)
+    x = finite(signal)
     gain = positive(gain_ratio)
     if not np.isfinite(phase_error_rad) or abs(phase_error_rad) >= np.pi / 2:
         raise ValueError("invertible quadrature phase required")
