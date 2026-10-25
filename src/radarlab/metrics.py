@@ -23,3 +23,13 @@ def ospa(truth, estimates, cutoff_m=10, order=2):
         rr, cc = linear_sum_assignment(cost)
         matched = float(cost[rr, cc].sum())
     return ((matched + (len(b) - len(a)) * cut**p) / len(b)) ** (1 / p)
+
+
+def nees(error, covariance):
+    from .core import finite
+
+    e = finite(error, real=True, ndim=1)
+    p = finite(covariance, real=True, ndim=2)
+    if p.shape != (len(e), len(e)) or not np.allclose(p, p.T) or np.min(np.linalg.eigvalsh(p)) <= 0:
+        raise ValueError("positive definite error covariance required")
+    return float(e @ np.linalg.solve(p, e))
