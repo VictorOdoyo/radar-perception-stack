@@ -47,3 +47,17 @@ def innovation(state, covariance, position, measurement_covariance):
     s = p[:2, :2] + r
     nis = float(residual @ np.linalg.solve(s, residual))
     return residual, s, nis
+
+
+def correct(state, covariance, position, measurement_covariance, gate=9.21034):
+    from .core import positive
+
+    x, p = validate_state(state, covariance)
+    y, s, nis = innovation(x, p, position, measurement_covariance)
+    if nis > positive(gate):
+        return x.copy(), p.copy(), False, nis
+    gain = np.linalg.solve(s, p[:, :2].T).T
+    h = np.column_stack([np.eye(2), np.zeros((2, 2))])
+    j = np.eye(4) - gain @ h
+    result = j @ p @ j.T + gain @ measurement_covariance @ gain.T
+    return x + gain @ y, (result + result.T) / 2, True, nis

@@ -22,3 +22,9 @@ def test_innovation_gate_scales_with_joint_uncertainty():
     _y, s, nis = m.innovation([0, 0, 0, 0], np.eye(4), [2, 0], np.eye(2))
     assert nis == pytest.approx(2)
     assert np.allclose(s, 2 * np.eye(2))
+
+
+def test_joseph_update_reduces_position_uncertainty_and_rejects_outlier():
+    x, p, ok, _nis = m.correct(np.zeros(4), np.eye(4), [1, 0], np.eye(2))
+    assert ok and x[0] == pytest.approx(0.5) and p[0, 0] == pytest.approx(0.5)
+    assert not m.correct(np.zeros(4), np.eye(4), [100, 0], np.eye(2))[2]
