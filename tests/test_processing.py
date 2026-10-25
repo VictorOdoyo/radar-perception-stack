@@ -28,3 +28,12 @@ def test_doppler_fft_preserves_bin_tone_amplitude_and_sign():
     x = np.exp(2j * np.pi * 5 * np.arange(p.chirps) / p.chirps)[:, None, None] * np.ones((1, 8, p.receivers))
     a = m.doppler_fft(x, p)
     assert np.allclose(a[p.chirps // 2 + 5], 1)
+
+
+def test_fft_axes_match_independent_sampling_frequencies():
+    from radarlab.waveform import Radar
+
+    p = Radar()
+    a = m.axes(p)
+    assert a["beat_hz"][1] == p.sample_hz / p.samples
+    assert a["receding_m_s"][p.chirps // 2] == 0
