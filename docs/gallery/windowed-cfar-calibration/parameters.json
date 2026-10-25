@@ -1,0 +1,16 @@
+{
+  "frames": 12,
+  "nominal_pfa": 0.01,
+  "radar": {
+    "bandwidth_hz": 300000000.0,
+    "carrier_hz": 77000000000.0,
+    "chirps": 64,
+    "ramp_s": 4e-05,
+    "receivers": 2,
+    "repetition_s": 5e-05,
+    "sample_hz": 6400000.0,
+    "samples": 256,
+    "spacing_wavelength": 0.5
+  },
+  "seed": 42
+}

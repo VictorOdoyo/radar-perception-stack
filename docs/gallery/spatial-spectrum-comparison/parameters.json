@@ -1,0 +1,10 @@
+{
+  "noise_component_scale": 0.15,
+  "receivers": 8,
+  "seed": 42,
+  "snapshots": 300,
+  "source_angles_rad": [
+    -0.2,
+    0.25
+  ]
+}

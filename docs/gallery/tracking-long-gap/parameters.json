@@ -1,0 +1,31 @@
+{
+  "dropped_indices": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "frames": 30,
+  "gate_nis": 9.21034,
+  "maximum_misses": 5,
+  "period_s": 0.1,
+  "process_noise": 1,
+  "radar": {
+    "bandwidth_hz": 300000000.0,
+    "carrier_hz": 77000000000.0,
+    "chirps": 64,
+    "ramp_s": 4e-05,
+    "receivers": 8,
+    "repetition_s": 5e-05,
+    "sample_hz": 6400000.0,
+    "samples": 256,
+    "spacing_wavelength": 0.5
+  },
+  "seed": 42,
+  "turn": false
+}

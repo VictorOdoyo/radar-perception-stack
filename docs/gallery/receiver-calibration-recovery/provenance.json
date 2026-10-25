@@ -1,0 +1,12 @@
+{
+  "configuration_sha256": "feb4b71372787c6480227948245deb65403365e5b38839edec45c424fe417b12",
+  "git_dirty": false,
+  "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+  "matplotlib": "3.11.2",
+  "numpy": "2.5.4",
+  "package_version": "0.1.0",
+  "parameters_sha256": "e9da27001059b18fd9888516f47515b0d80bb05200ff4b9a6e7702b6ff008ff2",
+  "python": "3.13.15",
+  "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+  "scipy": "1.18.1"
+}

@@ -1,0 +1,649 @@
+{
+  "experiments": [
+    {
+      "archive": "single-target/fields.npz",
+      "case": "single-target",
+      "configuration": {
+        "case": "single-target",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "f5d659ccea1b91e2eee88f2fc775f913457b5a49b2f5dfbcde137e665361e20b",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "fdd2e42e2c07013c0f5be904788ac0720b502ba8939a31600407c1bd188ff0f5",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 2,
+        "false_detections": 1,
+        "matched_targets": 1,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "two-targets/fields.npz",
+      "case": "two-targets",
+      "configuration": {
+        "case": "two-targets",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "d8517b8cebc9045102ad46673f09b4dda33578752f7e2f68c7216db352ce2374",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "7c080b609ce60d8f278af47cd2ee45ded27b6fa8bff8fb42c62d7ca43be4e1da",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 3,
+        "false_detections": 1,
+        "matched_targets": 2,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "unresolved-targets/fields.npz",
+      "case": "unresolved-targets",
+      "configuration": {
+        "case": "unresolved-targets",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "55dbd6f1a31ae4aab770b7881bbdfde6aad3c33f6f554853aa26ee46587ed2ed",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "b62e69bef8dfecd09e807ca9257545bb47d52b0125bc654bf18c053b2548e6c5",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 2,
+        "false_detections": 1,
+        "matched_targets": 1,
+        "missed_targets": 1
+      }
+    },
+    {
+      "archive": "clutter-contamination/fields.npz",
+      "case": "clutter-contamination",
+      "configuration": {
+        "case": "clutter-contamination",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "9a99fde1ecdfe05b2806efcf0ababfe2ad1a8d6e6845bcc761ceddafce6ca7a8",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "d41d15ee3b1f6defef7b395fca3360f416142acdf46ce9eaed6cfd389affe8e7",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 20,
+        "false_detections": 19,
+        "matched_targets": 1,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "clutter-subtraction/fields.npz",
+      "case": "clutter-subtraction",
+      "configuration": {
+        "case": "clutter-subtraction",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "5a39646322bef934fed44212d1c04da319c8e76baf2477d62990597f8d38ae13",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "f603cd571fe5640a66360943b1869f7a85ba7beeb2341c5915e4a4c2a40df3aa",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 14,
+        "false_detections": 13,
+        "matched_targets": 1,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "multipath-ghosts/fields.npz",
+      "case": "multipath-ghosts",
+      "configuration": {
+        "case": "multipath-ghosts",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "4cffee23614679e784841c317cad8f1c4f13ece2dafd5f1dd0df66aa0f1cd04b",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "fd561e8b8197aa1db1bf0914a64fd2484b7ad07e33e25f0499336d2545e926f5",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 3,
+        "false_detections": 2,
+        "matched_targets": 1,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "adc-saturation/fields.npz",
+      "case": "adc-saturation",
+      "configuration": {
+        "case": "adc-saturation",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "cd9e5df93b44f424d7dddae35b520c29ca91dd7d804f250a31af8f3c9953f006",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "a0560c8dc3c7f0bce068331b051066e57295c1abd8bc9fc60ac946912112220e",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.9585952758789062,
+        "detections": 3,
+        "false_detections": 2,
+        "matched_targets": 1,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "receiver-calibration-error/fields.npz",
+      "case": "receiver-calibration-error",
+      "configuration": {
+        "case": "receiver-calibration-error",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "e01a4e96512378ea9ae3d28bef4283379a359bcf15ceb23c7cd82ba1934d6b5a",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "b8a2d59be6a69b909aca44b4c7e4ce8ab79d4453a25d9f763351e7ed33d45ebd",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 2,
+        "false_detections": 1,
+        "matched_targets": 1,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "oscillator-phase-noise/fields.npz",
+      "case": "oscillator-phase-noise",
+      "configuration": {
+        "case": "oscillator-phase-noise",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "c1c4918c04a7d7f27cd3dd57249f4eb2f5d71455e7832efe7b453f0cdd530f9a",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "270127ac3de4414a7d6482f1ba559d9e8be3086e7edb65fddd8a2a0c8237079c",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 7,
+        "false_detections": 6,
+        "matched_targets": 1,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "chirp-nonlinearity/fields.npz",
+      "case": "chirp-nonlinearity",
+      "configuration": {
+        "case": "chirp-nonlinearity",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "8e529ca4e5d515cd641a374478aeb964c6386898272e611cdb5b55c090817554",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "8be56176fdfd269597053427f5b8e5680bf58e41a3b5f7370a09f9a290c0564b",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 2,
+        "false_detections": 2,
+        "matched_targets": 0,
+        "missed_targets": 1
+      }
+    },
+    {
+      "archive": "low-snr-detection/fields.npz",
+      "case": "low-snr-detection",
+      "configuration": {
+        "case": "low-snr-detection",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "d0091636d9b572f1ee5d1c5731f14aaef27848bd5c0184bdbe0ec0f536cd7beb",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "7aecdf87db29fb42ff9593591d1d6adc8853dfc011d750e8425b55b44d996187",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 1,
+        "false_detections": 1,
+        "matched_targets": 0,
+        "missed_targets": 1
+      }
+    },
+    {
+      "archive": "chirp-dropout/fields.npz",
+      "case": "chirp-dropout",
+      "configuration": {
+        "case": "chirp-dropout",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "395e7197ac7230a3633d30fc60c09efdbde62c6b638f3f600b9530b64c856160",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "0852e149f0b705d44f6c563f567a420589a94c11c062425d9e9a4ba15dff26a1",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "clipped_fraction": 0.0,
+        "detections": 7,
+        "false_detections": 6,
+        "matched_targets": 1,
+        "missed_targets": 0
+      }
+    },
+    {
+      "archive": "multi-object-tracking/fields.npz",
+      "case": "multi-object-tracking",
+      "configuration": {
+        "case": "multi-object-tracking",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "8840ae064b442b3a14da1c8fb5eab14bac16c063ce6fc4b83c056240f5e36a22",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "2f4411fe6d066d161722f5f9e8f06641c24dee9b471044e8a2d83beb84cc7582",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "final_confirmed_tracks": 2,
+        "final_ospa_m": 0.018471913426485645,
+        "identity_switches": 0,
+        "mean_ospa_m": 0.6926326505259515,
+        "valid_frame_fraction": 1.0
+      }
+    },
+    {
+      "archive": "tracking-short-gap/fields.npz",
+      "case": "tracking-short-gap",
+      "configuration": {
+        "case": "tracking-short-gap",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "13acbb52b0a2f218f2915ddb03a14f970ceb50782596c29634bcee0fb09a65cc",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "aad2b586d59c8f024bc657f8fce5af267fb7f22b748e7a30657ee0bc06011fa8",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "final_confirmed_tracks": 2,
+        "final_ospa_m": 0.018858769952157402,
+        "identity_switches": 0,
+        "mean_ospa_m": 0.6944856420597127,
+        "valid_frame_fraction": 0.9
+      }
+    },
+    {
+      "archive": "tracking-long-gap/fields.npz",
+      "case": "tracking-long-gap",
+      "configuration": {
+        "case": "tracking-long-gap",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "020f8aa18d1f00086528db6bfce00612c4927ca446e3dcfaf2cc2d9a08848ae0",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "e630a8e230a137d3e0364bfbb69f2c99f68a2a4aaddd9907b34f6745674fc0c1",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "final_confirmed_tracks": 2,
+        "final_ospa_m": 0.020528671596049198,
+        "identity_switches": 2,
+        "mean_ospa_m": 3.0183260740373523,
+        "valid_frame_fraction": 0.7
+      }
+    },
+    {
+      "archive": "maneuver-model-mismatch/fields.npz",
+      "case": "maneuver-model-mismatch",
+      "configuration": {
+        "case": "maneuver-model-mismatch",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "d5e7b537b180edfc54ec1650a78409528fc05053ab24859567aabab321d16414",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "0c3ebf77d151e643f2f7a7151d7d6033b77393450dc2bac18320ebb9f35710f0",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "final_confirmed_tracks": 2,
+        "final_ospa_m": 0.10612887275827947,
+        "identity_switches": 0,
+        "mean_ospa_m": 0.7368703344212304,
+        "valid_frame_fraction": 1.0
+      }
+    },
+    {
+      "archive": "cfar-false-alarm/fields.npz",
+      "case": "cfar-false-alarm",
+      "configuration": {
+        "case": "cfar-false-alarm",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "e4a465dcd33065baa67f96dbb8110094ec28affe612deb893edff5ac303aedad",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "870066e030d4f8fdde4684af063ded685bc892d0f1cd00acb480a537736f1d93",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "maximum_absolute_error": 0.002149460767055897
+      }
+    },
+    {
+      "archive": "windowed-cfar-calibration/fields.npz",
+      "case": "windowed-cfar-calibration",
+      "configuration": {
+        "case": "windowed-cfar-calibration",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "a44871e21e596f7e3dfff9c7bea0a6979818a33984f9295a1868255902d4c791",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "df595bf234631cdf336bfe02150e2393630baa91e65f6eefd9a32a6bf596b294",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "boxcar_rate": 0.009455605158730158,
+        "hann_rate": 0.010788690476190476
+      }
+    },
+    {
+      "archive": "os-cfar-contamination/fields.npz",
+      "case": "os-cfar-contamination",
+      "configuration": {
+        "case": "os-cfar-contamination",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "1ea353a4816014c71e9c505b3ebe5a9b89c7239475add353aa5ce2b26b0d150f",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "ccb8a26d844c15f8705a1e1251f479ea721f53aaf6eca4b113c6e27c07042b79",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "final_ca_pd": 0.0,
+        "final_os_pd": 0.6394
+      }
+    },
+    {
+      "archive": "spatial-spectrum-comparison/fields.npz",
+      "case": "spatial-spectrum-comparison",
+      "configuration": {
+        "case": "spatial-spectrum-comparison",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "e29f5e4c7e0b6786079c60ef2f0d985ebb40508a945d7b364e30946bbd8b3ec9",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "1294618c43c73b548ec0adf5eccc7a529582d3898d8358af0d7a51400219831f",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "covariance_condition": 411.36359898016116
+      }
+    },
+    {
+      "archive": "ego-motion-consensus/fields.npz",
+      "case": "ego-motion-consensus",
+      "configuration": {
+        "case": "ego-motion-consensus",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "a442241c40d0c9a42287b4ef76b9f342ea57631a00f280fe9155632a18874fc5",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "fec831166074e946e33985e688eb4cedfbc9015a0a5b1d045824ed02f87a3098",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "least_squares_error_m_s": 1.121224280894207,
+        "robust_error_m_s": 0.0023551632261170534
+      }
+    },
+    {
+      "archive": "dual-prf-unwrapping/fields.npz",
+      "case": "dual-prf-unwrapping",
+      "configuration": {
+        "case": "dual-prf-unwrapping",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "b4e93ce56ab181b6e416934ee7780f2c7a6f1f42c79d7b513f27fd37c12cc98e",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "d3f223285e2a79658d578ea4084fb5a9e96a8fe7ab1a32df1f402cf1c22a89d6",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "maximum_error_m_s": 0.0
+      }
+    },
+    {
+      "archive": "chirp-ambiguity/fields.npz",
+      "case": "chirp-ambiguity",
+      "configuration": {
+        "case": "chirp-ambiguity",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "f44dfddda99101c48094c1992d309cf0e2e71b2169851d28e174ae80820ca49e",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "f80a98892d769ffb8fb57ddcaca9730893e0df42d1a4d8058b0cb043fde5062c",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "zero_offset_magnitude": 1.0
+      }
+    },
+    {
+      "archive": "receiver-calibration-recovery/fields.npz",
+      "case": "receiver-calibration-recovery",
+      "configuration": {
+        "case": "receiver-calibration-recovery",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "feb4b71372787c6480227948245deb65403365e5b38839edec45c424fe417b12",
+        "git_dirty": false,
+        "git_revision": "af791fbe32a93bb2174ccbd885b148ddbea28e4d",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "e9da27001059b18fd9888516f47515b0d80bb05200ff4b9a6e7702b6ff008ff2",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "maximum_calibrated_error_deg": 7.105427357601002e-15,
+        "maximum_uncalibrated_error_deg": 1.9163473928289747
+      }
+    }
+  ],
+  "schema_version": 1
+}

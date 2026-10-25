@@ -1,0 +1,8 @@
+{
+  "pfa": 0.001,
+  "rank": 24,
+  "seed": 42,
+  "target_amplitude": 5,
+  "training_cells": 32,
+  "trials": 10000
+}

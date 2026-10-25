@@ -1,0 +1,5 @@
+{
+  "seed": 42,
+  "training_cells": 48,
+  "trials_per_probability": 30000
+}

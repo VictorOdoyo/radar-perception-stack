@@ -1,0 +1,61 @@
+{
+  "impairments": {
+    "adc_bits": null,
+    "adc_full_scale": null,
+    "chirp_curvature_hz_s": 0,
+    "clutter_correlation": 0.99,
+    "clutter_power": 0,
+    "drop_probability": 0,
+    "phase_step_std_rad": 0,
+    "receiver_gain": null,
+    "receiver_phase_rad": null
+  },
+  "noise_power": 1.0,
+  "pfa_nominal": 0.0001,
+  "processing": {
+    "angle_std_rad": 0.02,
+    "guard": [
+      2,
+      2
+    ],
+    "nms_radius": [
+      2,
+      2
+    ],
+    "range_std_m": 0.3,
+    "training": [
+      6,
+      6
+    ],
+    "window": "hann"
+  },
+  "radar": {
+    "bandwidth_hz": 300000000.0,
+    "carrier_hz": 77000000000.0,
+    "chirps": 64,
+    "ramp_s": 4e-05,
+    "receivers": 8,
+    "repetition_s": 5e-05,
+    "sample_hz": 6400000.0,
+    "samples": 256,
+    "spacing_wavelength": 0.5
+  },
+  "seed": 42,
+  "targets": [
+    {
+      "amplitude_imag": 0.0,
+      "amplitude_real": 1.0,
+      "angle_rad": 0.2,
+      "range_m": 30,
+      "receding_m_s": 5
+    },
+    {
+      "amplitude_imag": 0.0,
+      "amplitude_real": 0.3,
+      "angle_rad": 0.1,
+      "range_m": 38.0,
+      "receding_m_s": 5
+    }
+  ],
+  "variant": "ghost"
+}
