@@ -87,3 +87,14 @@ def power_db(power, reference=1.0, floor_db=-120):
     if np.any(p < 0) or not np.isfinite(floor_db):
         raise ValueError("nonnegative power and finite display floor required")
     return 10 * np.log10(np.maximum(p / positive(reference), 10 ** (floor_db / 10)))
+
+
+def noise_gain(model=None, range_window="hann", doppler_window="hann"):
+    from .waveform import Radar
+
+    p = Radar() if model is None else model
+    gain = 1.0
+    for n, kind in ((p.samples, range_window), (p.chirps, doppler_window)):
+        w = window(n, kind)["values"]
+        gain *= np.sum(w * w) / np.sum(w) ** 2
+    return float(gain)

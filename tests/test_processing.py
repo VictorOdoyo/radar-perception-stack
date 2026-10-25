@@ -54,3 +54,10 @@ def test_log_parabola_recovers_independent_gaussian_peak():
 
 def test_power_db_uses_power_ratio_and_explicit_floor():
     assert np.allclose(m.power_db([0, 1, 0.01]), [-120, 0, -20])
+
+
+def test_boxcar_noise_gain_matches_coherent_integration_length():
+    from radarlab.waveform import Radar
+
+    p = Radar()
+    assert m.noise_gain(p, "boxcar", "boxcar") == pytest.approx(1 / (p.samples * p.chirps))
