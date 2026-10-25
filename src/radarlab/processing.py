@@ -78,3 +78,12 @@ def parabolic_peak(power, index):
     if den >= 0:
         return float(index)
     return float(index + np.clip(0.5 * (a - c) / den, -0.5, 0.5))
+
+
+def power_db(power, reference=1.0, floor_db=-120):
+    from .core import finite, positive
+
+    p = finite(power, real=True)
+    if np.any(p < 0) or not np.isfinite(floor_db):
+        raise ValueError("nonnegative power and finite display floor required")
+    return 10 * np.log10(np.maximum(p / positive(reference), 10 ** (floor_db / 10)))

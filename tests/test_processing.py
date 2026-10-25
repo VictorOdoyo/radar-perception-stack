@@ -50,3 +50,7 @@ def test_log_parabola_recovers_independent_gaussian_peak():
     x = np.arange(21)
     p = np.exp(-0.5 * ((x - 10.25) / 2) ** 2)
     assert m.parabolic_peak(p, 10) == pytest.approx(10.25)
+
+
+def test_power_db_uses_power_ratio_and_explicit_floor():
+    assert np.allclose(m.power_db([0, 1, 0.01]), [-120, 0, -20])
