@@ -29,3 +29,10 @@ def test_circular_receiver_noise_matches_declared_total_power():
 def test_monostatic_received_power_obeys_fourth_power_range_loss():
     a = m.received_power(10, 1, 1, 10, 0.004)
     assert m.received_power(20, 1, 1, 10, 0.004) == pytest.approx(a / 16)
+
+
+def test_noise_bandwidth_and_noise_figure_scale_linearly():
+    assert m.thermal_noise(2e6) == pytest.approx(2 * m.thermal_noise(1e6))
+    assert m.thermal_noise(1e6, noise_figure_db=10) == pytest.approx(
+        10 * m.thermal_noise(1e6, noise_figure_db=0)
+    )

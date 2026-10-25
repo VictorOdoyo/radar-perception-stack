@@ -51,3 +51,11 @@ def received_power(range_m, rcs_m2, transmit_w, gain_linear, wavelength_m, loss_
     if loss < 1:
         raise ValueError("passive loss factor must be at least one")
     return pt * gain**2 * wavelength**2 * sigma / ((4 * np.pi) ** 3 * r**4 * loss)
+
+
+def thermal_noise(bandwidth_hz, temperature_k=290, noise_figure_db=6):
+    from .core import positive
+
+    if not np.isfinite(noise_figure_db) or noise_figure_db < 0:
+        raise ValueError("nonnegative finite noise figure required")
+    return 1.380649e-23 * positive(temperature_k) * positive(bandwidth_hz) * 10 ** (noise_figure_db / 10)
