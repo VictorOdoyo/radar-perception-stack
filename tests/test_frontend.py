@@ -32,3 +32,10 @@ def test_phase_noise_preserves_magnitudes_and_common_receiver_phase():
     a = m.phase_noise(x)
     assert np.allclose(abs(a), 1)
     assert np.array_equal(a[:, :, 0], a[:, :, 2])
+
+
+def test_interference_blanker_marks_unavailable_samples():
+    x = np.ones((4, 16, 2), complex)
+    x[1, 3, :] = 100
+    a = m.blank_impulses(x, 5)
+    assert not a["valid"][1, 3] and np.all(a["iq"][1, 3] == 0)

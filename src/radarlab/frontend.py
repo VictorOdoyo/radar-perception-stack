@@ -69,3 +69,15 @@ def phase_noise(cube, std_step_rad=0.01, seed=42):
     rng = stream(seed, "oscillator-phase")
     phase = np.cumsum(rng.normal(0, positive(std_step_rad, allow_zero=True), size=x.shape[:2]), axis=1)
     return x * np.exp(1j * phase[:, :, None])
+
+
+def blank_impulses(cube, magnitude_limit):
+    from .core import finite, positive
+
+    x = finite(cube, ndim=3)
+    valid = np.all(abs(x) <= positive(magnitude_limit), axis=2)
+    return {
+        "iq": np.where(valid[:, :, None], x, 0),
+        "valid": valid,
+        "blanked_fraction": float(np.mean(~valid)),
+    }
