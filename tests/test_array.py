@@ -57,3 +57,8 @@ def test_angle_bound_improves_with_snr_snapshots_and_aperture():
     assert m.angle_crlb(0, 20) == pytest.approx(base / 2)
     assert m.angle_crlb(0, 10, snapshots=2) == pytest.approx(base / 2)
     assert m.angle_crlb(0.5, 10) > base
+
+
+def test_music_rejects_negative_covariance_eigenvalues():
+    with pytest.raises(ValueError):
+        m.music(np.diag([1.0, 1.0, -1.0]), np.linspace(-0.5, 0.5, 10))

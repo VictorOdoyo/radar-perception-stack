@@ -66,7 +66,12 @@ def music(covariance_matrix, angle_grid, sources=1, spacing_wavelength=0.5):
 
     r = finite(covariance_matrix, ndim=2)
     integer(sources)
-    if r.shape[0] != r.shape[1] or sources >= len(r) or not np.allclose(r, r.conj().T):
+    if (
+        r.shape[0] != r.shape[1]
+        or sources >= len(r)
+        or not np.allclose(r, r.conj().T)
+        or np.min(np.linalg.eigvalsh(r)) < -1e-10
+    ):
         raise ValueError("Hermitian covariance and fewer sources than receivers required")
     _, vectors = np.linalg.eigh(r)
     noise = vectors[:, : len(r) - sources]
