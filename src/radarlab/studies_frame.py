@@ -155,3 +155,7 @@ def study(name, variant="nominal", scale=1, seed=42):
 
 def nominal(scale=1, seed=42):
     return study("single-target", "nominal", scale, seed)
+
+
+def two(scale=1, seed=42):
+    return study("two-targets", "two", scale, seed)
