@@ -39,3 +39,11 @@ def test_os_multiplier_matches_independent_product_tail():
     k = 30
     a = m.os_multiplier(n, k, 1e-4)
     assert np.prod(np.arange(n - k + 1, n + 1) / (np.arange(n - k + 1, n + 1) + a)) == pytest.approx(1e-4)
+
+
+def test_os_cfar_retains_target_with_contaminated_training_cells():
+    p = np.ones(100)
+    p[50] = 100
+    p[40] = 1000
+    a = m.os_cfar(p)
+    assert a["detections"][50] and not a["valid"][0]

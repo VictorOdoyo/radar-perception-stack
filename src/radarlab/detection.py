@@ -91,3 +91,24 @@ def os_multiplier(training_cells, rank, false_alarm=1e-4):
     while residual(high) > 0:
         high *= 2
     return brentq(residual, 0, high)
+
+
+def os_cfar(power, training=12, guard=2, rank=None, false_alarm=1e-4):
+    from .core import finite, integer
+
+    p = finite(power, real=True, ndim=1)
+    integer(training)
+    integer(guard, 0)
+    if np.any(p < 0) or len(p) < 2 * (training + guard) + 1:
+        raise ValueError("sufficient nonnegative power samples required")
+    n = 2 * training
+    k = int(np.ceil(0.75 * n)) if rank is None else rank
+    alpha = os_multiplier(n, k, false_alarm)
+    threshold = np.zeros(len(p))
+    valid = np.zeros(len(p), bool)
+    extent = training + guard
+    for j in range(extent, len(p) - extent):
+        cells = np.r_[p[j - extent : j - guard], p[j + guard + 1 : j + extent + 1]]
+        threshold[j] = alpha * np.partition(cells, k - 1)[k - 1]
+        valid[j] = True
+    return {"detections": valid & (p > threshold), "threshold": threshold, "valid": valid}
