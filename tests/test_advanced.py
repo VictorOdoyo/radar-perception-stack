@@ -33,3 +33,12 @@ def test_angle_fft_recovers_half_wavelength_array_direction():
 def test_grating_lobes_expose_large_spacing_ambiguity():
     assert len(m.grating_lobes(0.2, 0.5)) == 1
     assert len(m.grating_lobes(0.2, 1.5)) > 1
+
+
+def test_chirp_curvature_preserves_power_but_changes_fast_time_phase():
+    from radarlab.waveform import Radar
+
+    p = Radar()
+    x = np.ones((p.chirps, p.samples, p.receivers), complex)
+    a = m.nonlinear_beat(x, 1e9, p)
+    assert np.allclose(abs(a), 1) and not np.allclose(a, x)

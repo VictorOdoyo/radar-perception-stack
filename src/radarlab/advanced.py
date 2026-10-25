@@ -54,3 +54,15 @@ def grating_lobes(angle_rad, spacing_wavelength):
     orders = np.arange(-int(np.ceil(2 * spacing)) - 1, int(np.ceil(2 * spacing)) + 2)
     sine = np.sin(angle_rad) + orders / spacing
     return np.arcsin(sine[abs(sine) <= 1])
+
+
+def nonlinear_beat(cube, curvature_hz_s, model=None):
+    from .core import finite
+    from .waveform import Radar, coordinates
+
+    p = Radar() if model is None else model
+    x = finite(cube, ndim=3)
+    if x.shape[1] != p.samples or not np.isfinite(curvature_hz_s):
+        raise ValueError("aligned fast time and finite chirp curvature required")
+    t = coordinates(p)["fast_s"]
+    return x * np.exp(1j * np.pi * curvature_hz_s * t * t)[None, :, None]
