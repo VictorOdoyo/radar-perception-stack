@@ -140,6 +140,29 @@ def study(name, variant="nominal", scale=1, seed=42):
             "variant": variant,
             "seed": seed,
             "pfa_nominal": 1e-4,
+            "processing": {
+                "window": "hann",
+                "training": [6, 6],
+                "guard": [2, 2],
+                "nms_radius": [2, 2],
+                "range_std_m": 0.3,
+                "angle_std_rad": 0.02,
+            },
+            "impairments": {
+                "clutter_power": 20 if variant in ("clutter", "clutter-removed") else 0,
+                "clutter_correlation": 0.99,
+                "adc_full_scale": 0.3 if variant == "clipping" else None,
+                "adc_bits": 8 if variant == "clipping" else None,
+                "receiver_gain": np.linspace(0.7, 1.3, p.receivers).tolist()
+                if variant == "calibration"
+                else None,
+                "receiver_phase_rad": np.linspace(0, 0.7, p.receivers).tolist()
+                if variant == "calibration"
+                else None,
+                "phase_step_std_rad": 0.2 if variant == "phase-noise" else 0,
+                "chirp_curvature_hz_s": 3e9 if variant == "nonlinear" else 0,
+                "drop_probability": 0.3 if variant == "dropout" else 0,
+            },
         },
         {
             "detections": len(d),

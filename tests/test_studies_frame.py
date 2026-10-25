@@ -62,3 +62,8 @@ def test_challenge_archives_retain_exact_sensor_validity_masks():
     assert np.mean(r["arrays"]["clipping_mask"]) == r["summary"]["clipped_fraction"]
     d = m.dropout()
     assert np.array_equal(d["arrays"]["chirp_valid"], ~np.all(d["arrays"]["iq"] == 0, axis=(1, 2)))
+
+
+def test_frame_parameters_describe_actual_impairment_coefficients():
+    p = m.calibration()["parameters"]
+    assert p["impairments"]["receiver_phase_rad"][-1] == 0.7 and p["processing"]["window"] == "hann"
