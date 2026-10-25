@@ -17,3 +17,8 @@ def test_nees_is_invariant_to_consistent_linear_coordinate_scaling():
     p = np.array([[2.0, 0.2], [0.2, 3.0]])
     transform = np.diag([2.0, 3.0])
     assert m.nees(transform @ e, transform @ p @ transform.T) == pytest.approx(m.nees(e, p))
+
+
+def test_detection_scoring_penalizes_false_and_missed_objects():
+    r = m.match_points([[0, 0], [10, 0]], [[0.1, 0], [30, 0]])
+    assert r["pairs"] == [(0, 0)] and r["precision"] == 0.5 and r["recall"] == 0.5

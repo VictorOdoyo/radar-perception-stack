@@ -33,3 +33,24 @@ def nees(error, covariance):
     if p.shape != (len(e), len(e)) or not np.allclose(p, p.T) or np.min(np.linalg.eigvalsh(p)) <= 0:
         raise ValueError("positive definite error covariance required")
     return float(e @ np.linalg.solve(p, e))
+
+
+def match_points(truth, estimates, gate_m=2):
+    from scipy.spatial.distance import cdist
+
+    from .core import finite, positive
+    from .tracking import assign
+
+    a = finite(truth, real=True, ndim=2)
+    b = finite(estimates, real=True, ndim=2)
+    gate = positive(gate_m)
+    if a.shape[1] != b.shape[1]:
+        raise ValueError("matching position dimensions required")
+    pairs, missed, false = assign(cdist(a, b) ** 2, gate**2)
+    return {
+        "pairs": pairs,
+        "missed": missed,
+        "false": false,
+        "precision": len(pairs) / len(b) if len(b) else 0.0,
+        "recall": len(pairs) / len(a) if len(a) else 0.0,
+    }
