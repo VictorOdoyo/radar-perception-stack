@@ -26,3 +26,7 @@ def test_spatial_spectrum_study_retains_complex_covariance():
 def test_robust_ego_study_outperforms_unfiltered_least_squares():
     r = m.ego_consensus()["summary"]
     assert r["robust_error_m_s"] < r["least_squares_error_m_s"]
+
+
+def test_dual_prf_study_preserves_out_of_interval_velocity():
+    assert m.dual_prf()["summary"]["maximum_error_m_s"] < 1e-9

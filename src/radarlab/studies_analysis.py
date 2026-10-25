@@ -233,3 +233,36 @@ def ego_consensus(scale=1, seed=42):
             )
         ],
     )
+
+
+def dual_prf(scale=1, seed=42):
+    from .advanced import unwrap_velocity
+
+    truth = np.linspace(-75, 75, 151 * scale)
+    periods = np.array([38.0, 31.0])
+    observed = (truth[:, None] + periods / 2) % periods - periods / 2
+    estimate = np.array([unwrap_velocity(v, periods, maximum_speed=80, tolerance=0.001) for v in observed])
+    a = {
+        "truth_m_s": truth,
+        "prf1_m_s": observed[:, 0],
+        "prf2_m_s": observed[:, 1],
+        "unwrapped_m_s": estimate,
+    }
+    return make(
+        "dual-prf-unwrapping",
+        {"alias_periods_m_s": periods.tolist(), "search_bound_m_s": 80},
+        {"maximum_error_m_s": float(max(abs(estimate - truth)))},
+        a,
+        [
+            curve(
+                "Wrapped observations and unique bounded solution",
+                "truth_m_s",
+                [("prf1_m_s", "PRF 1"), ("prf2_m_s", "PRF 2"), ("unwrapped_m_s", "Bounded solution")],
+                "True radial velocity (m/s)",
+                "Estimated radial velocity (m/s)",
+            )
+        ],
+        assumptions=[
+            "Noiseless paired velocities, same object association, unique bounded candidate required."
+        ],
+    )
