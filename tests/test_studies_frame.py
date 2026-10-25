@@ -36,7 +36,9 @@ def test_saturation_study_records_invalid_sensor_fraction():
 
 def test_calibration_error_study_retains_channel_distortion():
     r = m.calibration()
-    assert r["parameters"]["variant"] == "calibration"
+    truth = 0.2
+    selected = min(r["tables"]["detections"], key=lambda d: abs(d["range_m"] - 30))
+    assert abs(selected["angle_rad"] - truth) > 0.02
 
 
 def test_phase_noise_scene_keeps_finite_raw_iq():
