@@ -54,3 +54,18 @@ def coordinates(model=None):
         "slow_s": np.arange(p.chirps) * p.repetition_s,
         "receiver_m": np.arange(p.receivers) * p.spacing_m,
     }
+
+
+def chirp(time_s, model=None):
+    from .core import finite
+
+    p = Radar() if model is None else model
+    t = finite(time_s, real=True)
+    return np.exp(1j * np.pi * p.slope * t * t)
+
+
+def dechirp(received, transmitted):
+    from .core import finite
+
+    rx, tx = np.broadcast_arrays(finite(received), finite(transmitted))
+    return tx * np.conj(rx)
