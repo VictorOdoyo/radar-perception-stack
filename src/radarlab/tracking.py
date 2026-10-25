@@ -33,3 +33,17 @@ def predict(state, covariance, dt_s, acceleration_spectral_density=1):
     x, p = validate_state(state, covariance)
     f, q = transition(dt_s, acceleration_spectral_density)
     return f @ x, f @ p @ f.T + q
+
+
+def innovation(state, covariance, position, measurement_covariance):
+    from .core import finite
+
+    x, p = validate_state(state, covariance)
+    z = finite(position, real=True)
+    r = finite(measurement_covariance, real=True)
+    if z.shape != (2,) or r.shape != (2, 2) or not np.allclose(r, r.T) or np.min(np.linalg.eigvalsh(r)) <= 0:
+        raise ValueError("2D observation and positive definite covariance required")
+    residual = z - x[:2]
+    s = p[:2, :2] + r
+    nis = float(residual @ np.linalg.solve(s, residual))
+    return residual, s, nis
