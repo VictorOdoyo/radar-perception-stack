@@ -19,3 +19,12 @@ def test_range_fft_recovers_bin_centered_complex_amplitude():
     )
     a = m.range_fft(x, p)
     assert np.allclose(a[:, 20, :], 1)
+
+
+def test_doppler_fft_preserves_bin_tone_amplitude_and_sign():
+    from radarlab.waveform import Radar
+
+    p = Radar()
+    x = np.exp(2j * np.pi * 5 * np.arange(p.chirps) / p.chirps)[:, None, None] * np.ones((1, 8, p.receivers))
+    a = m.doppler_fft(x, p)
+    assert np.allclose(a[p.chirps // 2 + 5], 1)

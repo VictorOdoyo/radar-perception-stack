@@ -29,3 +29,16 @@ def range_fft(cube, model=None, fft_size=None, window_kind="hann"):
     w = window(p.samples, window_kind)["values"]
     spectrum = np.fft.fft(x * w[None, :, None], n=n, axis=1) / sum(w)
     return spectrum[:, : n // 2, :]
+
+
+def doppler_fft(range_spectrum, model=None, fft_size=None, window_kind="hann"):
+    from .core import finite, integer
+    from .waveform import Radar
+
+    p = Radar() if model is None else model
+    x = finite(range_spectrum, ndim=3)
+    n = p.chirps if fft_size is None else integer(fft_size, 2)
+    if x.shape[0] != p.chirps or n < p.chirps:
+        raise ValueError("aligned chirp count and nontruncating Doppler FFT required")
+    w = window(p.chirps, window_kind)["values"]
+    return np.fft.fftshift(np.fft.fft(x * w[:, None, None], n=n, axis=0), axes=0) / sum(w)
