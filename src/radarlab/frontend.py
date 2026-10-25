@@ -81,3 +81,13 @@ def blank_impulses(cube, magnitude_limit):
         "valid": valid,
         "blanked_fraction": float(np.mean(~valid)),
     }
+
+
+def drop_chirps(cube, probability=0.1, seed=42):
+    from .core import finite, stream
+
+    x = finite(cube, ndim=3)
+    if not 0 <= probability <= 1:
+        raise ValueError("drop probability in [0,1] required")
+    valid = stream(seed, "chirp-dropout").random(len(x)) >= probability
+    return {"iq": np.where(valid[:, None, None], x, 0), "valid": valid}

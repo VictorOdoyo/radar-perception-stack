@@ -39,3 +39,10 @@ def test_interference_blanker_marks_unavailable_samples():
     x[1, 3, :] = 100
     a = m.blank_impulses(x, 5)
     assert not a["valid"][1, 3] and np.all(a["iq"][1, 3] == 0)
+
+
+def test_chirp_dropout_keeps_explicit_unavailable_rows():
+    x = np.ones((100, 4, 2), complex)
+    a = m.drop_chirps(x, 0.5)
+    assert 30 < np.sum(a["valid"]) < 70
+    assert np.all(a["iq"][~a["valid"]] == 0)
