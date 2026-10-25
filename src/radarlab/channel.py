@@ -24,3 +24,16 @@ def target_cube(target, model=None, allow_alias=False):
         + target.phase_rad
     )
     return target.amplitude * np.exp(1j * phase)
+
+
+def synthesize(targets, model=None, noise_power=1.0, seed=42, allow_alias=False):
+    from .core import positive, stream
+    from .waveform import Radar
+
+    p = Radar() if model is None else model
+    power = positive(noise_power, allow_zero=True)
+    data = np.zeros((p.chirps, p.samples, p.receivers), complex)
+    for target in targets:
+        data += target_cube(target, p, allow_alias)
+    rng = stream(seed, "receiver-thermal-noise")
+    return data + np.sqrt(power / 2) * (rng.normal(size=data.shape) + 1j * rng.normal(size=data.shape))

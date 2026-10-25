@@ -17,3 +17,10 @@ def test_coherent_cube_axes_have_independent_analytic_phase_steps():
     assert np.angle(a[1, 0, 0] / a[0, 0, 0]) == pytest.approx(
         2 * np.pi * 2 * 5 / p.wavelength * p.repetition_s
     )
+
+
+def test_circular_receiver_noise_matches_declared_total_power():
+    a = m.synthesize([], noise_power=2)
+    assert np.mean(abs(a) ** 2) == pytest.approx(2, rel=0.02)
+    assert np.mean(a.real * a.imag) == pytest.approx(0, abs=0.02)
+    assert np.array_equal(a, m.synthesize([], noise_power=2))
