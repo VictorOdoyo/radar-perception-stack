@@ -36,3 +36,7 @@ def test_radial_velocity_jacobian_matches_finite_difference():
 
 def test_ego_compensation_restores_stationary_world_target():
     assert m.ego_compensate(-10, 0, [0, 10]) == pytest.approx(0)
+
+
+def test_sensor_pose_transform_rotates_then_translates():
+    assert np.allclose(m.transform([1, 0], [3, 4], np.pi / 2), [3, 5])

@@ -50,3 +50,13 @@ def ego_compensate(receding_m_s, angle_rad, ego_velocity):
     a = finite(angle_rad, real=True)
     v = finite(receding_m_s, real=True)
     return v + e[0] * np.sin(a) + e[1] * np.cos(a)
+
+
+def transform(points, translation=(0, 0), yaw_rad=0):
+    p = finite(points, real=True)
+    t = finite(translation, real=True)
+    if p.shape[-1] != 2 or t.shape != (2,) or not np.isfinite(yaw_rad):
+        raise ValueError("2D rigid pose required")
+    c, s = np.cos(yaw_rad), np.sin(yaw_rad)
+    rotation = np.array([[c, -s], [s, c]])
+    return p @ rotation.T + t
