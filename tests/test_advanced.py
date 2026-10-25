@@ -42,3 +42,12 @@ def test_chirp_curvature_preserves_power_but_changes_fast_time_phase():
     x = np.ones((p.chirps, p.samples, p.receivers), complex)
     a = m.nonlinear_beat(x, 1e9, p)
     assert np.allclose(abs(a), 1) and not np.allclose(a, x)
+
+
+def test_leakage_is_coherent_across_chirps_and_receivers():
+    from radarlab.waveform import Radar
+
+    p = Radar()
+    x = np.zeros((p.chirps, p.samples, p.receivers), complex)
+    a = m.leakage(x)
+    assert np.array_equal(a[0, :, 0], a[-1, :, -1]) and np.allclose(abs(a), 10)

@@ -66,3 +66,15 @@ def nonlinear_beat(cube, curvature_hz_s, model=None):
         raise ValueError("aligned fast time and finite chirp curvature required")
     t = coordinates(p)["fast_s"]
     return x * np.exp(1j * np.pi * curvature_hz_s * t * t)[None, :, None]
+
+
+def leakage(cube, amplitude=10, beat_hz=1000, model=None):
+    from .core import finite, positive
+    from .waveform import Radar, coordinates
+
+    p = Radar() if model is None else model
+    x = finite(cube, ndim=3)
+    t = coordinates(p)["fast_s"]
+    if x.shape[1] != len(t) or not np.isfinite(beat_hz):
+        raise ValueError("aligned fast-time leakage required")
+    return x + positive(amplitude, allow_zero=True) * np.exp(2j * np.pi * beat_hz * t)[None, :, None]
