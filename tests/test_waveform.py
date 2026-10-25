@@ -40,3 +40,10 @@ def test_limits_use_observed_bandwidth_and_coherent_frame_duration():
     a = m.limits(p)
     assert a["range_resolution_m"] == pytest.approx(m.C / (2 * p.bandwidth_hz))
     assert a["velocity_bin_m_s"] == pytest.approx(2 * a["closing_nyquist_m_s"] / p.chirps)
+
+
+def test_target_descriptor_rejects_nonphysical_geometry():
+    with pytest.raises(ValueError):
+        m.Target(range_m=-1)
+    with pytest.raises(ValueError):
+        m.Target(angle_rad=2)

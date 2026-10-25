@@ -99,3 +99,21 @@ def limits(model=None):
         "closing_nyquist_m_s": p.wavelength / (4 * p.repetition_s),
         "velocity_bin_m_s": p.wavelength / (2 * p.chirps * p.repetition_s),
     }
+
+
+@dataclass(frozen=True)
+class Target:
+    range_m: float = 30.0
+    closing_m_s: float = 5.0
+    angle_rad: float = 0.15
+    amplitude: complex = 1.0
+    phase_rad: float = 0.0
+
+    def __post_init__(self):
+        from .core import finite, positive
+
+        positive(self.range_m)
+        finite([self.closing_m_s, self.angle_rad, self.phase_rad], real=True)
+        finite(self.amplitude)
+        if abs(self.angle_rad) > np.pi / 2:
+            raise ValueError("front hemisphere azimuth required")
