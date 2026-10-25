@@ -69,3 +69,23 @@ def dechirp(received, transmitted):
 
     rx, tx = np.broadcast_arrays(finite(received), finite(transmitted))
     return tx * np.conj(rx)
+
+
+def beat_frequency(range_m, closing_m_s=0, model=None):
+    from .core import finite
+
+    p = Radar() if model is None else model
+    r = finite(range_m, real=True)
+    v = finite(closing_m_s, real=True)
+    if np.any(r < 0):
+        raise ValueError("nonnegative ranges required")
+    return 2 * p.slope * r / C + 2 * v / p.wavelength
+
+
+def range_from_beat(beat_hz, closing_m_s=0, model=None):
+    from .core import finite
+
+    p = Radar() if model is None else model
+    return (
+        (finite(beat_hz, real=True) - 2 * finite(closing_m_s, real=True) / p.wavelength) * C / (2 * p.slope)
+    )

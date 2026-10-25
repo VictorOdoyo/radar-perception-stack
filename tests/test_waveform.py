@@ -26,3 +26,10 @@ def test_dechirped_stationary_delay_has_positive_range_beat():
     y = m.dechirp(m.chirp(t - tau, p), m.chirp(t, p))
     beat = np.angle(y[1:] * y[:-1].conj()) * p.sample_hz / (2 * np.pi)
     assert np.allclose(beat, p.slope * tau, atol=1e-5)
+
+
+def test_range_beat_coupling_requires_doppler_correction():
+    p = m.Radar()
+    f = m.beat_frequency(30, 10, p)
+    assert m.range_from_beat(f, 10, p) == pytest.approx(30)
+    assert m.range_from_beat(f, 0, p) > 30
