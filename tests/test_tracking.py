@@ -53,3 +53,18 @@ def test_track_confirmation_requires_persistent_evidence_and_coasts_on_miss():
     assert r.confirmed
     r.observe(False)
     assert r.confirmed and r.misses == 1
+
+
+def test_tracker_confirms_measured_motion_coasts_and_deletes_without_truth():
+    r = m.Tracker(maximum_misses=3)
+    for k in range(5):
+        tracks = r.update(
+            k * 0.1,
+            [{"position": np.array([1.0, 30 + k * 0.2]), "covariance": np.eye(2) * 0.1, "receding_m_s": 2}],
+        )
+    assert len(tracks) == 1 and tracks[0].identifier == 1
+    assert r.update(0.5, [])[0].misses == 1
+    r.update(0.6, [])
+    assert r.update(0.7, []) == []
+    with pytest.raises(ValueError):
+        r.update(0.7, [])

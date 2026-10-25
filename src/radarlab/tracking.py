@@ -158,3 +158,55 @@ class Track:
         self.misses = 0 if matched else self.misses + 1
         self.history = [*self.history, bool(matched)][-window:]
         self.confirmed = self.confirmed or sum(self.history) >= confirmation_hits
+
+
+class Tracker:
+    def __init__(self, gate=9.21034, process_noise=1, maximum_misses=5):
+        from .core import integer, positive
+
+        self.gate = positive(gate)
+        self.process_noise = positive(process_noise, allow_zero=True)
+        self.maximum_misses = integer(maximum_misses)
+        self.tracks = []
+        self.time = None
+        self.next_id = 1
+
+    def update(self, time_s, detections):
+        if not np.isfinite(time_s) or (self.time is not None and time_s <= self.time):
+            raise ValueError("strictly increasing finite tracker time required")
+        records = list(detections)
+        for d in records:
+            initialize(d["position"], d["covariance"], d.get("receding_m_s", 0))
+        if self.time is not None:
+            for track in self.tracks:
+                track.state, track.covariance = predict(
+                    track.state, track.covariance, time_s - self.time, self.process_noise
+                )
+        self.time = float(time_s)
+        costs = np.array(
+            [
+                [innovation(t.state, t.covariance, d["position"], d["covariance"])[2] for d in records]
+                for t in self.tracks
+            ]
+        ).reshape(len(self.tracks), len(records))
+        matches, missed, new = assign(costs, self.gate)
+        for i, j in matches:
+            track = self.tracks[i]
+            d = records[j]
+            track.state, track.covariance, _ok, _nis = correct(
+                track.state, track.covariance, d["position"], d["covariance"], self.gate
+            )
+            if "receding_m_s" in d:
+                track.state, track.covariance, _ok = correct_radial(
+                    track.state, track.covariance, d["receding_m_s"]
+                )
+            track.observe(True)
+        for i in missed:
+            self.tracks[i].observe(False)
+        self.tracks = [t for t in self.tracks if t.misses < (self.maximum_misses if t.confirmed else 2)]
+        for j in new:
+            d = records[j]
+            x, p = initialize(d["position"], d["covariance"], d.get("receding_m_s", 0))
+            self.tracks.append(Track(self.next_id, x, p))
+            self.next_id += 1
+        return [t for t in self.tracks if t.confirmed]
