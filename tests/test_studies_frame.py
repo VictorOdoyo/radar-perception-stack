@@ -37,3 +37,7 @@ def test_saturation_study_records_invalid_sensor_fraction():
 def test_calibration_error_study_retains_channel_distortion():
     r = m.calibration()
     assert r["parameters"]["variant"] == "calibration"
+
+
+def test_phase_noise_scene_keeps_finite_raw_iq():
+    assert np.isfinite(m.oscillator()["arrays"]["iq"]).all()

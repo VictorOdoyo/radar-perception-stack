@@ -183,3 +183,7 @@ def clipping(scale=1, seed=42):
 
 def calibration(scale=1, seed=42):
     return study("receiver-calibration-error", "calibration", scale, seed)
+
+
+def oscillator(scale=1, seed=42):
+    return study("oscillator-phase-noise", "phase-noise", scale, seed)
