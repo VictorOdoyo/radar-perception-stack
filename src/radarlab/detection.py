@@ -23,3 +23,29 @@ def training_kernel(training=(6, 6), guard=(2, 2)):
     kernel = np.ones(tuple(2 * half + 1))
     kernel[half[0] - guard[0] : half[0] + guard[0] + 1, half[1] - guard[1] : half[1] + guard[1] + 1] = 0
     return kernel
+
+
+def ca_cfar(power, training=(6, 6), guard=(2, 2), false_alarm=1e-4):
+    from scipy.signal import convolve2d
+
+    from .core import finite
+
+    p = finite(power, real=True, ndim=2)
+    if np.any(p < 0):
+        raise ValueError("nonnegative power map required")
+    kernel = training_kernel(training, guard)
+    n = int(kernel.sum())
+    h = np.array(kernel.shape) // 2
+    if np.any(np.array(p.shape) < np.array(kernel.shape)):
+        raise ValueError("power map smaller than training aperture")
+    noise = convolve2d(p, kernel, mode="same", boundary="fill") / n
+    valid = np.zeros(p.shape, bool)
+    valid[h[0] : p.shape[0] - h[0], h[1] : p.shape[1] - h[1]] = True
+    threshold = noise * ca_multiplier(n, false_alarm)
+    return {
+        "detections": valid & (p > threshold),
+        "threshold": threshold,
+        "noise": noise,
+        "valid": valid,
+        "training_cells": n,
+    }
