@@ -14,7 +14,11 @@ def read_csv(path):
             raise ValueError("exact SI detection CSV header required")
         rows = []
         for raw in reader:
-            if set(raw) != set(COLUMNS) or raw["valid"] not in ("0", "1"):
+            if (
+                set(raw) != set(COLUMNS)
+                or any(raw[key] is None or raw[key] == "" for key in COLUMNS)
+                or raw["valid"] not in ("0", "1")
+            ):
                 raise ValueError("complete detection rows and valid 0/1 required")
             row = {key: float(raw[key]) for key in COLUMNS[:-1]}
             row["valid"] = raw["valid"] == "1"

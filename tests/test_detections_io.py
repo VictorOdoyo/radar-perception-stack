@@ -35,3 +35,10 @@ def test_external_report_retains_input_rows_and_track_table():
     r = m.report(rows)
     assert r["summary"]["final_confirmed_tracks"] == 1
     assert r["parameters"]["rows"] == rows and len(r["tables"]["tracks"]) == 3
+
+
+def test_detection_csv_rejects_truncated_rows(tmp_path):
+    p = tmp_path / "bad.csv"
+    p.write_text(",".join(m.COLUMNS) + "\n0,30,2\n")
+    with pytest.raises(ValueError):
+        m.read_csv(p)
