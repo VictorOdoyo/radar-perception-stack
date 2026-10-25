@@ -175,3 +175,7 @@ def filtered(scale=1, seed=42):
 
 def ghosts(scale=1, seed=42):
     return study("multipath-ghosts", "ghost", scale, seed)
+
+
+def clipping(scale=1, seed=42):
+    return study("adc-saturation", "clipping", scale, seed)

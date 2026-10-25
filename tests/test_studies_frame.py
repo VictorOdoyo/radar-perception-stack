@@ -28,3 +28,7 @@ def test_clutter_filtered_scene_retains_moving_target():
 
 def test_ghost_scene_does_not_award_truth_for_reflected_path():
     assert m.ghosts()["summary"]["false_detections"] >= 1
+
+
+def test_saturation_study_records_invalid_sensor_fraction():
+    assert m.clipping()["summary"]["clipped_fraction"] > 0.5
