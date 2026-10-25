@@ -59,3 +59,17 @@ def mvdr(covariance_matrix, angle_grid, spacing_wavelength=0.5):
     a = steering(angle_grid, len(r), spacing_wavelength)
     solved = np.linalg.solve(r, a.T)
     return 1 / np.maximum(np.einsum("ij,ji->i", a.conj(), solved).real, 1e-30)
+
+
+def music(covariance_matrix, angle_grid, sources=1, spacing_wavelength=0.5):
+    from .core import finite, integer
+
+    r = finite(covariance_matrix, ndim=2)
+    integer(sources)
+    if r.shape[0] != r.shape[1] or sources >= len(r) or not np.allclose(r, r.conj().T):
+        raise ValueError("Hermitian covariance and fewer sources than receivers required")
+    _, vectors = np.linalg.eigh(r)
+    noise = vectors[:, : len(r) - sources]
+    a = steering(angle_grid, len(r), spacing_wavelength)
+    denominator = np.sum(abs(a.conj() @ noise) ** 2, axis=1)
+    return 1 / np.maximum(denominator, 1e-20)

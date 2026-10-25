@@ -35,3 +35,11 @@ def test_mvdr_peak_matches_known_covariance_source():
     grid = np.linspace(-0.5, 0.5, 501)
     power = m.mvdr(r, grid)
     assert grid[np.argmax(power)] == pytest.approx(angle)
+
+
+def test_music_noise_subspace_nulls_known_steering_vector():
+    angle = -0.18
+    a = m.steering(angle)
+    r = np.outer(a, a.conj()) + 0.1 * np.eye(8)
+    grid = np.linspace(-0.5, 0.5, 501)
+    assert grid[np.argmax(m.music(r, grid))] == pytest.approx(angle)
