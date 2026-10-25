@@ -38,3 +38,8 @@ def test_radial_update_changes_observable_velocity():
 def test_global_assignment_preserves_feasible_matches_and_unmatched_rows():
     a, missed, new = m.assign([[1, 2], [1.1, 100], [100, 100]])
     assert sorted(a) == [(0, 1), (1, 0)] and missed == [2] and new == []
+
+
+def test_birth_covariance_retains_unobserved_tangential_velocity():
+    x, p = m.initialize([0, 30], np.eye(2), 2)
+    assert np.allclose(x, [0, 30, 0, 2]) and p[2, 2] > p[3, 3] * 100

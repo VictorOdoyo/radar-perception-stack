@@ -105,3 +105,29 @@ def assign(cost, gate=9.21034):
         [i for i in range(rows) if all(i != a for a, _ in matches)],
         [j for j in range(cols) if all(j != b for _, b in matches)],
     )
+
+
+def initialize(position, position_covariance, receding_m_s=0, radial_std=0.5, tangential_std=10):
+    from .core import finite, positive
+
+    pos = finite(position, real=True)
+    cov = finite(position_covariance, real=True)
+    if (
+        pos.shape != (2,)
+        or cov.shape != (2, 2)
+        or np.linalg.norm(pos) < 1e-6
+        or not np.allclose(cov, cov.T)
+        or np.min(np.linalg.eigvalsh(cov)) <= 0
+    ):
+        raise ValueError("observable position and positive covariance required")
+    if not np.isfinite(receding_m_s):
+        raise ValueError("finite radial velocity required")
+    unit = pos / np.linalg.norm(pos)
+    tangent = np.array([unit[1], -unit[0]])
+    velocity = unit * receding_m_s
+    p = np.zeros((4, 4))
+    p[:2, :2] = cov
+    p[2:, 2:] = positive(radial_std) ** 2 * np.outer(unit, unit) + positive(tangential_std) ** 2 * np.outer(
+        tangent, tangent
+    )
+    return np.r_[pos, velocity], p
