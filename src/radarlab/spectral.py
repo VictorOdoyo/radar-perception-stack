@@ -37,3 +37,18 @@ def micro_doppler(cube, amplitude_m, frequency_hz, model=None):
         2 * np.pi * positive(frequency_hz) * coordinates(p)["slow_s"]
     )
     return x * np.exp(4j * np.pi * displacement / p.wavelength)[:, None, None]
+
+
+def migrating_cube(target, model=None):
+    from dataclasses import replace
+
+    from .channel import target_cube
+    from .waveform import Radar, coordinates
+
+    p = Radar() if model is None else model
+    slow = coordinates(p)["slow_s"]
+    out = np.empty((p.chirps, p.samples, p.receivers), complex)
+    for k, t in enumerate(slow):
+        moved = replace(target, range_m=target.range_m + target.receding_m_s * t)
+        out[k] = target_cube(moved, p, allow_alias=True)[k]
+    return out

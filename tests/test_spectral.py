@@ -18,3 +18,11 @@ def test_micro_doppler_preserves_power_and_zero_motion_is_identity():
     x = np.ones((p.chirps, p.samples, p.receivers), complex)
     assert np.array_equal(m.micro_doppler(x, 0, 10, p), x)
     assert np.allclose(abs(m.micro_doppler(x, 0.001, 100, p)), 1)
+
+
+def test_range_migration_is_zero_for_stationary_scatterer():
+    from radarlab.channel import target_cube
+    from radarlab.waveform import Target
+
+    target = Target(receding_m_s=0)
+    assert np.allclose(m.migrating_cube(target), target_cube(target))
