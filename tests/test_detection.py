@@ -47,3 +47,8 @@ def test_os_cfar_retains_target_with_contaminated_training_cells():
     p[40] = 1000
     a = m.os_cfar(p)
     assert a["detections"][50] and not a["valid"][0]
+
+
+def test_wilson_interval_remains_nonzero_at_zero_false_alarms():
+    low, high = m.wilson(0, 1000)
+    assert low == 0 and 0.003 < high < 0.004

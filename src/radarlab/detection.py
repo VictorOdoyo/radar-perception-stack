@@ -112,3 +112,18 @@ def os_cfar(power, training=12, guard=2, rank=None, false_alarm=1e-4):
         threshold[j] = alpha * np.partition(cells, k - 1)[k - 1]
         valid[j] = True
     return {"detections": valid & (p > threshold), "threshold": threshold, "valid": valid}
+
+
+def wilson(successes, trials, z=1.95996398454):
+    from .core import integer, positive
+
+    integer(successes, 0)
+    integer(trials)
+    positive(z)
+    if successes > trials:
+        raise ValueError("success count exceeds trials")
+    p = successes / trials
+    den = 1 + z * z / trials
+    center = (p + z * z / (2 * trials)) / den
+    half = z * np.sqrt(p * (1 - p) / trials + z * z / (4 * trials**2)) / den
+    return max(0, center - half), min(1, center + half)
