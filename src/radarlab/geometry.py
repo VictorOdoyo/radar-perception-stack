@@ -27,3 +27,17 @@ def position_covariance(range_m, angle_rad, range_std_m=0.3, angle_std_rad=0.02)
     s, c = np.sin(angle_rad), np.cos(angle_rad)
     jac = np.array([[s, r * c], [c, -r * s]])
     return jac @ np.diag([sr * sr, sa * sa]) @ jac.T
+
+
+def radial_measurement(state):
+    x = finite(state, real=True)
+    if x.shape != (4,):
+        raise ValueError("x y vx vy state required")
+    pos, vel = x[:2], x[2:]
+    r = np.linalg.norm(pos)
+    if r < 1e-6:
+        raise ValueError("radial velocity unobservable at origin")
+    unit = pos / r
+    value = float(unit @ vel)
+    jac = np.r_[(vel - unit * value) / r, unit]
+    return value, jac
