@@ -39,3 +39,17 @@ def dbscan(features, scales, epsilon=1, min_points=2):
                 labels[j] = cluster
         cluster += 1
     return labels
+
+
+def centroid(points, weights):
+    from .core import finite
+
+    x = finite(points, real=True, ndim=2)
+    w = finite(weights, real=True, ndim=1)
+    if len(x) != len(w) or len(w) < 1 or np.any(w < 0) or sum(w) <= 0:
+        raise ValueError("nonempty aligned nonnegative cluster weights required")
+    w = w / sum(w)
+    center = w @ x
+    delta = x - center
+    cov = (delta.T * w) @ delta
+    return center, cov
