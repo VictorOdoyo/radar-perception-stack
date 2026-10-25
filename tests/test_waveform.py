@@ -33,3 +33,10 @@ def test_range_beat_coupling_requires_doppler_correction():
     f = m.beat_frequency(30, 10, p)
     assert m.range_from_beat(f, 10, p) == pytest.approx(30)
     assert m.range_from_beat(f, 0, p) > 30
+
+
+def test_limits_use_observed_bandwidth_and_coherent_frame_duration():
+    p = m.Radar()
+    a = m.limits(p)
+    assert a["range_resolution_m"] == pytest.approx(m.C / (2 * p.bandwidth_hz))
+    assert a["velocity_bin_m_s"] == pytest.approx(2 * a["closing_nyquist_m_s"] / p.chirps)

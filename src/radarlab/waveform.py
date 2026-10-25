@@ -89,3 +89,13 @@ def range_from_beat(beat_hz, closing_m_s=0, model=None):
     return (
         (finite(beat_hz, real=True) - 2 * finite(closing_m_s, real=True) / p.wavelength) * C / (2 * p.slope)
     )
+
+
+def limits(model=None):
+    p = Radar() if model is None else model
+    return {
+        "range_resolution_m": C / (2 * p.slope * (p.samples / p.sample_hz)),
+        "positive_range_nyquist_m": p.sample_hz * C / (4 * p.slope),
+        "closing_nyquist_m_s": p.wavelength / (4 * p.repetition_s),
+        "velocity_bin_m_s": p.wavelength / (2 * p.chirps * p.repetition_s),
+    }
