@@ -42,7 +42,9 @@ def test_calibration_error_study_retains_channel_distortion():
 
 
 def test_phase_noise_scene_keeps_finite_raw_iq():
-    assert np.isfinite(m.oscillator()["arrays"]["iq"]).all()
+    impaired = m.oscillator()["arrays"]["rd"]
+    nominal = m.nominal()["arrays"]["rd"]
+    assert np.max(abs(impaired[:, :, 0]) ** 2) < np.max(abs(nominal[:, :, 0]) ** 2)
 
 
 def test_nonlinear_chirp_study_records_variant():
