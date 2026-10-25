@@ -24,3 +24,11 @@ def test_raw_iq_record_roundtrip_retains_complex_samples_and_geometry(tmp_path):
     r = m.IQRecord([0, 0.1], x, p, np.ones(2, bool))
     restored = m.read_npz(m.write_npz(r, tmp_path / "record.npz"))
     assert np.array_equal(restored.iq, x) and restored.model == p
+
+
+def test_invalid_record_frames_are_not_processed_as_measurements():
+    from radarlab.waveform import Radar
+
+    p = Radar(chirps=4, samples=16, receivers=2)
+    r = m.IQRecord([0, 0.1], np.ones((2, 4, 16, 2), complex), p, np.zeros(2, bool))
+    assert all(row["detections"] == 0 for row in m.replay(r))

@@ -55,3 +55,23 @@ def read_npz(path):
         if set(meta) != {"schema", "radar"} or meta["schema"] != 1:
             raise ValueError("unsupported IQ record schema")
         return IQRecord(z["time_s"], z["iq"], Radar(**meta["radar"]), z["valid"])
+
+
+def replay(record):
+    from .pipeline import detect
+    from .tracking import Tracker
+
+    tracker = Tracker()
+    history = []
+    for time, iq, valid in zip(record.time_s, record.iq, record.valid, strict=True):
+        detections = detect(iq, record.model)["detections"] if valid else []
+        tracks = tracker.update(float(time), detections)
+        history.append(
+            {
+                "time_s": float(time),
+                "valid": bool(valid),
+                "detections": len(detections),
+                "confirmed": len(tracks),
+            }
+        )
+    return history
