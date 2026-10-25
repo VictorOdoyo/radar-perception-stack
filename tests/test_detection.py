@@ -23,3 +23,12 @@ def test_ca_cfar_detects_embedded_target_and_marks_edges_unavailable():
     r = m.ca_cfar(p)
     assert r["detections"][32, 60] and r["detections"].sum() == 1
     assert not r["valid"][0].any()
+
+
+def test_nms_keeps_strongest_cell_within_declared_guard():
+    p = np.zeros((20, 20))
+    p[10, 10] = 10
+    p[11, 11] = 5
+    p[15, 15] = 4
+    a = m.suppress(p, p > 0)
+    assert a.tolist() == [[10, 10], [15, 15]]

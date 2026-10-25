@@ -49,3 +49,25 @@ def ca_cfar(power, training=(6, 6), guard=(2, 2), false_alarm=1e-4):
         "valid": valid,
         "training_cells": n,
     }
+
+
+def suppress(power, detections, radius=(2, 2), maximum=100):
+    from .core import finite, integer
+
+    p = finite(power, real=True, ndim=2)
+    mask = np.asarray(detections)
+    integer(maximum)
+    if mask.dtype != bool or mask.shape != p.shape:
+        raise ValueError("aligned boolean detections required")
+    for v in radius:
+        integer(v, 0)
+    indices = np.argwhere(mask)
+    order = np.argsort(p[mask])[::-1]
+    selected = []
+    for k in order:
+        cell = indices[k]
+        if all(np.any(abs(cell - old) > np.asarray(radius)) for old in selected):
+            selected.append(cell)
+        if len(selected) >= maximum:
+            break
+    return np.asarray(selected, dtype=int).reshape(-1, 2)
