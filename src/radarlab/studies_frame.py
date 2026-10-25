@@ -195,3 +195,7 @@ def nonlinear(scale=1, seed=42):
 
 def low_snr(scale=1, seed=42):
     return study("low-snr-detection", "low-snr", scale, seed)
+
+
+def dropout(scale=1, seed=42):
+    return study("chirp-dropout", "dropout", scale, seed)

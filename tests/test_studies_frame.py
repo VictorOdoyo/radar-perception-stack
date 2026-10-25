@@ -50,3 +50,8 @@ def test_nonlinear_chirp_study_records_variant():
 def test_low_snr_study_scores_any_missing_target_explicitly():
     r = m.low_snr()
     assert r["summary"]["matched_targets"] + r["summary"]["missed_targets"] == 1
+
+
+def test_dropout_study_keeps_zeroed_unavailable_chirp_rows():
+    a = m.dropout()["arrays"]["iq"]
+    assert np.any(np.all(a == 0, axis=(1, 2)))
