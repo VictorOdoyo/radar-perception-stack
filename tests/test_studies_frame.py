@@ -55,3 +55,10 @@ def test_low_snr_study_scores_any_missing_target_explicitly():
 def test_dropout_study_keeps_zeroed_unavailable_chirp_rows():
     a = m.dropout()["arrays"]["iq"]
     assert np.any(np.all(a == 0, axis=(1, 2)))
+
+
+def test_challenge_archives_retain_exact_sensor_validity_masks():
+    r = m.clipping()
+    assert np.mean(r["arrays"]["clipping_mask"]) == r["summary"]["clipped_fraction"]
+    d = m.dropout()
+    assert np.array_equal(d["arrays"]["chirp_valid"], ~np.all(d["arrays"]["iq"] == 0, axis=(1, 2)))

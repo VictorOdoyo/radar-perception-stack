@@ -34,12 +34,15 @@ def study(name, variant="nominal", scale=1, seed=42):
     clipped = 0.0
     if variant == "low-snr":
         scene = [Target(30, 5, 0.2, 0.03)]
+    chirp_valid = np.ones(p.chirps, bool)
+    clipping_mask = np.zeros((p.chirps, p.samples, p.receivers), bool)
     iq = synthesize(scene, p, noise, seed)
     if variant in ("clutter", "clutter-removed"):
         iq += clutter(p, 20, 0.99, seed)
     if variant == "clipping":
         converted = adc(iq, 0.3, 8)
         iq = converted["iq"]
+        clipping_mask = converted["clipped"]
         clipped = float(np.mean(converted["clipped"]))
     if variant == "calibration":
         iq = channel_errors(iq, np.linspace(0.7, 1.3, p.receivers), np.linspace(0, 0.7, p.receivers))
@@ -48,7 +51,9 @@ def study(name, variant="nominal", scale=1, seed=42):
     if variant == "nonlinear":
         iq = nonlinear_beat(iq, 3e9, p)
     if variant == "dropout":
-        iq = drop_chirps(iq, 0.3, seed)["iq"]
+        dropped = drop_chirps(iq, 0.3, seed)
+        iq = dropped["iq"]
+        chirp_valid = dropped["valid"]
     data = detect(iq, p, clutter_remove=variant == "clutter-removed")
     d = data["detections"]
     power = data["power"]
@@ -61,6 +66,8 @@ def study(name, variant="nominal", scale=1, seed=42):
     n = max(1, len(d))
     a = {
         "iq": iq,
+        "chirp_valid": chirp_valid,
+        "clipping_mask": clipping_mask,
         "rd": data["rd"],
         "power_db": power_db(power),
         "range_m": axes["apparent_range_m"],
