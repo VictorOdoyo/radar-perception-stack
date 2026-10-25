@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def triangular_solution(up_hz, down_hz, slope_hz_s, wavelength_m):
     from .core import finite, positive
 
@@ -6,3 +9,23 @@ def triangular_solution(up_hz, down_hz, slope_hz_s, wavelength_m):
     up = finite(up_hz, real=True)
     down = finite(down_hz, real=True)
     return {"range_m": (up - down) * 299792458 / (4 * slope), "receding_m_s": (up + down) * wave / 4}
+
+
+def unwrap_velocity(measured, periods, maximum_speed=100, tolerance=0.1):
+    from .core import finite, positive
+
+    v = finite(measured, real=True, ndim=1)
+    period = finite(periods, real=True, ndim=1)
+    maximum = positive(maximum_speed)
+    tol = positive(tolerance)
+    if v.shape != period.shape or len(v) < 2 or np.any(period <= 0) or np.any(abs(v) > period / 2):
+        raise ValueError("aligned principal velocities and positive alias periods required")
+    count = int(np.ceil(maximum / period[0])) + 1
+    candidates = v[0] + period[0] * np.arange(-count, count + 1)
+    candidates = candidates[abs(candidates) <= maximum]
+    errors = (candidates[:, None] - v + period / 2) % period - period / 2
+    scores = np.sqrt(np.mean(errors**2, axis=1))
+    valid = candidates[scores <= tol]
+    if len(valid) != 1:
+        raise ValueError("velocity ambiguity unresolved or inconsistent")
+    return float(valid[0])
