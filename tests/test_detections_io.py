@@ -17,3 +17,11 @@ def test_detection_csv_roundtrip_retains_uncertainty_and_canonical_bytes(tmp_pat
     rows = [dict(zip(m.COLUMNS, [0.0, 30.0, 2.0, 0.2, 0.3, 0.02, True], strict=True))]
     p = m.write_csv(rows, tmp_path / "detections.csv")
     assert b"\r\n" not in p.read_bytes() and m.read_csv(p) == rows
+
+
+def test_detection_replay_groups_same_frame_and_coasts_on_invalid_row():
+    rows = []
+    for k in range(5):
+        rows.append(dict(zip(m.COLUMNS, [k * 0.1, 30 + k * 0.2, 2.0, 0.0, 0.3, 0.02, k != 4], strict=True)))
+    h = m.replay(rows)
+    assert len(h[-1]["tracks"]) == 1 and h[-1]["tracks"][0]["misses"] == 1

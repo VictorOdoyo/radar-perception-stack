@@ -47,3 +47,35 @@ def write_csv(rows, path):
             writer.writerow({**row, "valid": int(row["valid"])})
     read_csv(path)
     return path
+
+
+def replay(rows):
+    from itertools import groupby
+
+    from .geometry import polar_to_cartesian, position_covariance
+    from .tracking import Tracker
+
+    tracker = Tracker()
+    history = []
+    for time, group in groupby(rows, key=lambda row: row["time_s"]):
+        observations = []
+        for r in group:
+            if r["valid"]:
+                observations.append(
+                    {
+                        "position": polar_to_cartesian(r["range_m"], r["azimuth_rad"]),
+                        "covariance": position_covariance(
+                            r["range_m"], r["azimuth_rad"], r["range_std_m"], r["azimuth_std_rad"]
+                        ),
+                        "receding_m_s": r["receding_m_s"],
+                    }
+                )
+        tracks = tracker.update(time, observations)
+        history.append(
+            {
+                "time_s": time,
+                "detections": len(observations),
+                "tracks": [{"id": t.identifier, "state": t.state.copy(), "misses": t.misses} for t in tracks],
+            }
+        )
+    return history
