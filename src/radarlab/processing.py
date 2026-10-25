@@ -62,3 +62,19 @@ def remove_stationary(cube):
 
     x = finite(cube, ndim=3)
     return x - x.mean(axis=0, keepdims=True)
+
+
+def parabolic_peak(power, index):
+    from .core import finite, integer
+
+    p = finite(power, real=True, ndim=1)
+    integer(index, 0)
+    if np.any(p < 0) or not 0 <= index < len(p):
+        raise ValueError("valid nonnegative spectrum and peak index required")
+    if index == 0 or index == len(p) - 1 or np.min(p[index - 1 : index + 2]) <= 0:
+        return float(index)
+    a, b, c = np.log(p[index - 1 : index + 2])
+    den = a - 2 * b + c
+    if den >= 0:
+        return float(index)
+    return float(index + np.clip(0.5 * (a - c) / den, -0.5, 0.5))

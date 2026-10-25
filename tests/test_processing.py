@@ -44,3 +44,9 @@ def test_stationary_removal_rejects_zero_doppler_and_retains_nonzero_bin():
     assert np.allclose(m.remove_stationary(x), 0)
     moving = np.exp(2j * np.pi * 5 * np.arange(64) / 64)[:, None, None] * x
     assert np.allclose(m.remove_stationary(moving), moving)
+
+
+def test_log_parabola_recovers_independent_gaussian_peak():
+    x = np.arange(21)
+    p = np.exp(-0.5 * ((x - 10.25) / 2) ** 2)
+    assert m.parabolic_peak(p, 10) == pytest.approx(10.25)
