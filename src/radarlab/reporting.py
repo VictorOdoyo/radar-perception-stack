@@ -206,7 +206,7 @@ def plot_result(result, path):
                 series_valid = np.ones(len(x), bool) if "valid" not in series else arrays[series["valid"]]
                 usable = selected & series_valid
                 shown = np.where(usable, y, np.nan)
-                style = "o-" if len(x) <= 12 else "-"
+                style = plot.get("style", "o-" if len(x) <= 12 else "-")
                 if any(word in series["label"].lower() for word in ("exact", "analytic", "reference")):
                     style = "--"
                 ax.plot(
@@ -234,7 +234,7 @@ def plot_result(result, path):
                 field = field.real
             if plot["mask"] is not None:
                 field = np.ma.masked_where(arrays[plot["mask"]], field)
-            signed = np.min(field) < 0 < np.max(field)
+            signed = bool(plot.get("signed", False))
             colormap = plt.get_cmap("RdBu_r" if signed else "viridis").with_extremes(bad="#d1d5db")
             limit = float(np.max(abs(field))) if signed else None
             shown = ax.pcolormesh(
@@ -253,13 +253,13 @@ def plot_result(result, path):
                     ylim=(y[0] - (y[1] - y[0]) / 2, y[-1] + (y[-1] - y[-2]) / 2),
                     xticks=x,
                     yticks=y,
-                    aspect=plot.get("aspect", "equal"),
+                    aspect=plot.get("aspect", "auto"),
                 )
             else:
                 ax.set(
                     xlim=(plot["x"][0], plot["x"][-1]),
                     ylim=(plot["y"][0], plot["y"][-1]),
-                    aspect=plot.get("aspect", "equal"),
+                    aspect=plot.get("aspect", "auto"),
                 )
             fig.colorbar(shown, ax=ax, label=plot["colorbar"], pad=0.02)
         ax.set(title=plot["title"], xlabel=plot["xlabel"], ylabel=plot["ylabel"])

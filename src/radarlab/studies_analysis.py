@@ -94,6 +94,8 @@ def window_cfar(scale=1, seed=42):
                 [("observed_rate", "Observed; 0 boxcar / 1 Hann"), ("nominal_rate", "Nominal")],
                 "Window index",
                 "False alarm fraction",
+                style="o",
+                ylim=(0, 0.02),
             )
         ],
         {"rates": rows},

@@ -13,7 +13,9 @@ def native(value):
     return value
 
 
-def curve(title, x, series, xlabel, ylabel, xscale="linear", yscale="linear", valid=None, ylim=None):
+def curve(
+    title, x, series, xlabel, ylabel, xscale="linear", yscale="linear", valid=None, ylim=None, style=None
+):
     return {
         "kind": "curve",
         "title": title,
@@ -28,6 +30,7 @@ def curve(title, x, series, xlabel, ylabel, xscale="linear", yscale="linear", va
         "yscale": yscale,
         "valid": valid,
         "ylim": ylim,
+        **({"style": style} if style is not None else {}),
     }
 
 

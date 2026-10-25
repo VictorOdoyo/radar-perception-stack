@@ -116,6 +116,7 @@ def study(name, variant="nominal", scale=1, seed=42):
             "Detection index",
             "Range (m)",
             valid="detection_valid",
+            style="o",
         ),
     ]
     rows = [
