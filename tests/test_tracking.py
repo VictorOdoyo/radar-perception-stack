@@ -43,3 +43,13 @@ def test_global_assignment_preserves_feasible_matches_and_unmatched_rows():
 def test_birth_covariance_retains_unobserved_tangential_velocity():
     x, p = m.initialize([0, 30], np.eye(2), 2)
     assert np.allclose(x, [0, 30, 0, 2]) and p[2, 2] > p[3, 3] * 100
+
+
+def test_track_confirmation_requires_persistent_evidence_and_coasts_on_miss():
+    r = m.Track(1, np.zeros(4), np.eye(4))
+    r.observe(True)
+    assert not r.confirmed
+    r.observe(True)
+    assert r.confirmed
+    r.observe(False)
+    assert r.confirmed and r.misses == 1

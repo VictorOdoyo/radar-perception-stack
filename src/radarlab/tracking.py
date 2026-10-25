@@ -1,3 +1,5 @@
+from dataclasses import dataclass, field
+
 import numpy as np
 
 
@@ -131,3 +133,28 @@ def initialize(position, position_covariance, receding_m_s=0, radial_std=0.5, ta
         tangent, tangent
     )
     return np.r_[pos, velocity], p
+
+
+@dataclass
+class Track:
+    identifier: int
+    state: np.ndarray
+    covariance: np.ndarray
+    age: int = 1
+    hits: int = 1
+    misses: int = 0
+    confirmed: bool = False
+    history: list = field(default_factory=lambda: [True])
+
+    def observe(self, matched, confirmation_hits=3, window=5):
+        from .core import integer
+
+        integer(confirmation_hits)
+        integer(window)
+        if confirmation_hits > window:
+            raise ValueError("confirmation hits must fit history")
+        self.age += 1
+        self.hits += int(matched)
+        self.misses = 0 if matched else self.misses + 1
+        self.history = [*self.history, bool(matched)][-window:]
+        self.confirmed = self.confirmed or sum(self.history) >= confirmation_hits
