@@ -45,11 +45,14 @@ def doppler_fft(range_spectrum, model=None, fft_size=None, window_kind="hann"):
 
 
 def axes(model=None, range_size=None, doppler_size=None):
+    from .core import integer
     from .waveform import C, Radar
 
     p = Radar() if model is None else model
-    nr = p.samples if range_size is None else range_size
-    nd = p.chirps if doppler_size is None else doppler_size
+    nr = p.samples if range_size is None else integer(range_size, 2)
+    nd = p.chirps if doppler_size is None else integer(doppler_size, 2)
+    if nr < p.samples or nd < p.chirps:
+        raise ValueError("nontruncating FFT axes required")
     return {
         "beat_hz": np.arange(nr // 2) * p.sample_hz / nr,
         "apparent_range_m": np.arange(nr // 2) * p.sample_hz / nr * C / (2 * p.slope),

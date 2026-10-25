@@ -61,3 +61,10 @@ def test_boxcar_noise_gain_matches_coherent_integration_length():
 
     p = Radar()
     assert m.noise_gain(p, "boxcar", "boxcar") == pytest.approx(1 / (p.samples * p.chirps))
+
+
+def test_fft_axes_reject_truncated_and_nonintegral_transform_lengths():
+    with pytest.raises(ValueError):
+        m.axes(range_size=128)
+    with pytest.raises(ValueError):
+        m.axes(doppler_size=64.5)
