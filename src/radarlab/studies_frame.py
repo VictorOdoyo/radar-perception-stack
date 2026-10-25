@@ -171,3 +171,7 @@ def cluttered(scale=1, seed=42):
 
 def filtered(scale=1, seed=42):
     return study("clutter-subtraction", "clutter-removed", scale, seed)
+
+
+def ghosts(scale=1, seed=42):
+    return study("multipath-ghosts", "ghost", scale, seed)

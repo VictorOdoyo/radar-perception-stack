@@ -24,3 +24,7 @@ def test_clutter_scene_records_declared_correlated_interference():
 
 def test_clutter_filtered_scene_retains_moving_target():
     assert m.filtered()["summary"]["matched_targets"] == 1
+
+
+def test_ghost_scene_does_not_award_truth_for_reflected_path():
+    assert m.ghosts()["summary"]["false_detections"] >= 1
