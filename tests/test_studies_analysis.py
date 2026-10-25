@@ -35,3 +35,7 @@ def test_dual_prf_study_preserves_out_of_interval_velocity():
 
 def test_ambiguity_study_has_unit_zero_offset_response():
     assert m.ambiguity_map()["summary"]["zero_offset_magnitude"] == pytest.approx(1)
+
+
+def test_calibration_study_removes_known_receiver_phase_bias():
+    assert m.calibration_recovery()["summary"]["maximum_calibrated_error_deg"] < 1e-10

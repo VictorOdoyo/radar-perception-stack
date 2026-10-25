@@ -300,3 +300,40 @@ def ambiguity_map(scale=1, seed=42):
         [plot],
         assumptions=["Discrete finite waveform ambiguity; zero-padding is not extra bandwidth."],
     )
+
+
+def calibration_recovery(scale=1, seed=42):
+    from .array import phase_angle, steering
+    from .frontend import calibrate
+
+    truth = np.linspace(-0.6, 0.6, 81 * scale)
+    gains = np.linspace(0.8, 1.2, 8) * np.exp(1j * np.linspace(0, 0.6, 8))
+    correction = calibrate(gains)
+    biased = np.array([phase_angle(steering(a) * gains) for a in truth])
+    corrected = np.array([phase_angle(steering(a) * gains * correction) for a in truth])
+    a = {
+        "truth_deg": np.rad2deg(truth),
+        "biased_deg": np.rad2deg(biased),
+        "corrected_deg": np.rad2deg(corrected),
+    }
+    return make(
+        "receiver-calibration-recovery",
+        {"gain_amplitude": [0.8, 1.2], "phase_slope_rad": 0.6 / 7},
+        {
+            "maximum_uncalibrated_error_deg": float(max(abs(a["biased_deg"] - a["truth_deg"]))),
+            "maximum_calibrated_error_deg": float(max(abs(a["corrected_deg"] - a["truth_deg"]))),
+        },
+        a,
+        [
+            curve(
+                "Angle estimation before and after reference calibration",
+                "truth_deg",
+                [("truth_deg", "Truth"), ("biased_deg", "Uncalibrated"), ("corrected_deg", "Calibrated")],
+                "True azimuth (deg)",
+                "Estimated azimuth (deg)",
+            )
+        ],
+        assumptions=[
+            "Noiseless known broadside reference; calibration does not identify an unknown moving scene."
+        ],
+    )
