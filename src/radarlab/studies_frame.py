@@ -167,3 +167,7 @@ def close(scale=1, seed=42):
 
 def cluttered(scale=1, seed=42):
     return study("clutter-contamination", "clutter", scale, seed)
+
+
+def filtered(scale=1, seed=42):
+    return study("clutter-subtraction", "clutter-removed", scale, seed)
