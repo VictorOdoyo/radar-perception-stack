@@ -13,3 +13,9 @@ def test_bartlett_recovers_off_broadside_synthetic_angle():
     angle = 0.23
     r = m.bartlett(m.steering(angle))
     assert abs(r["angle_rad"] - angle) < 0.003
+
+
+def test_phase_angle_recovers_signed_angle_without_scan_quantization():
+    assert m.phase_angle(m.steering(-0.3)) == pytest.approx(-0.3)
+    with pytest.raises(ValueError):
+        m.phase_angle(m.steering(0.2), 0.7)
