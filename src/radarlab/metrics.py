@@ -54,3 +54,16 @@ def match_points(truth, estimates, gate_m=2):
         "precision": len(pairs) / len(b) if len(b) else 0.0,
         "recall": len(pairs) / len(a) if len(a) else 0.0,
     }
+
+
+def masked_rmse(errors, valid):
+    from .core import finite
+
+    e = finite(errors, real=True)
+    v = np.asarray(valid)
+    if v.dtype != bool or v.shape != (len(e),):
+        raise ValueError("explicit aligned boolean validity required")
+    if not np.any(v):
+        return {"available": False, "rmse": None, "count": 0}
+    selected = e[v]
+    return {"available": True, "rmse": float(np.sqrt(np.mean(selected**2))), "count": int(sum(v))}

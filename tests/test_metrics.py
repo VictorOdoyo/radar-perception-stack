@@ -22,3 +22,9 @@ def test_nees_is_invariant_to_consistent_linear_coordinate_scaling():
 def test_detection_scoring_penalizes_false_and_missed_objects():
     r = m.match_points([[0, 0], [10, 0]], [[0.1, 0], [30, 0]])
     assert r["pairs"] == [(0, 0)] and r["precision"] == 0.5 and r["recall"] == 0.5
+
+
+def test_conditional_rmse_does_not_treat_missing_estimates_as_zero():
+    r = m.masked_rmse([1, 100, 2], [True, False, True])
+    assert r["rmse"] == pytest.approx(np.sqrt(2.5))
+    assert m.masked_rmse([0], [False])["rmse"] is None
