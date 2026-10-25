@@ -24,6 +24,8 @@ def position_covariance(range_m, angle_rad, range_std_m=0.3, angle_std_rad=0.02)
     r = positive(range_m)
     sr = positive(range_std_m)
     sa = positive(angle_std_rad)
+    if not np.isfinite(angle_rad):
+        raise ValueError("finite azimuth required")
     s, c = np.sin(angle_rad), np.cos(angle_rad)
     jac = np.array([[s, r * c], [c, -r * s]])
     return jac @ np.diag([sr * sr, sa * sa]) @ jac.T

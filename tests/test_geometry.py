@@ -40,3 +40,8 @@ def test_ego_compensation_restores_stationary_world_target():
 
 def test_sensor_pose_transform_rotates_then_translates():
     assert np.allclose(m.transform([1, 0], [3, 4], np.pi / 2), [3, 5])
+
+
+def test_position_covariance_rejects_nan_angle():
+    with pytest.raises(ValueError):
+        m.position_covariance(20, np.nan)
