@@ -43,3 +43,14 @@ def angle_fft(snapshot, spacing_wavelength=0.5, fft_size=512):
     valid = abs(u) <= 1
     spectrum = np.fft.fftshift(np.fft.fft(x, fft_size)) / len(x)
     return {"angle_rad": np.arcsin(np.clip(u, -1, 1)), "power": abs(spectrum) ** 2, "valid": valid}
+
+
+def grating_lobes(angle_rad, spacing_wavelength):
+    from .core import positive
+
+    spacing = positive(spacing_wavelength)
+    if not np.isfinite(angle_rad) or abs(angle_rad) > np.pi / 2:
+        raise ValueError("front-hemisphere direction required")
+    orders = np.arange(-int(np.ceil(2 * spacing)) - 1, int(np.ceil(2 * spacing)) + 2)
+    sine = np.sin(angle_rad) + orders / spacing
+    return np.arcsin(sine[abs(sine) <= 1])

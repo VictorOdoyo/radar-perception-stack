@@ -28,3 +28,8 @@ def test_angle_fft_recovers_half_wavelength_array_direction():
     a = m.angle_fft(steering(0.3))
     j = np.argmax(np.where(a["valid"], a["power"], -1))
     assert abs(a["angle_rad"][j] - 0.3) < 0.01
+
+
+def test_grating_lobes_expose_large_spacing_ambiguity():
+    assert len(m.grating_lobes(0.2, 0.5)) == 1
+    assert len(m.grating_lobes(0.2, 1.5)) > 1
