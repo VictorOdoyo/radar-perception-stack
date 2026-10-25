@@ -73,3 +73,16 @@ def music(covariance_matrix, angle_grid, sources=1, spacing_wavelength=0.5):
     a = steering(angle_grid, len(r), spacing_wavelength)
     denominator = np.sum(abs(a.conj() @ noise) ** 2, axis=1)
     return 1 / np.maximum(denominator, 1e-20)
+
+
+def spatial_smoothing(snapshots, subarray=5):
+    from .core import finite, integer
+
+    x = finite(snapshots, ndim=2)
+    integer(subarray, 2)
+    if subarray > x.shape[1]:
+        raise ValueError("subarray must fit the receiver aperture")
+    matrices = [covariance(x[:, k : k + subarray], loading=0) for k in range(x.shape[1] - subarray + 1)]
+    r = sum(matrices) / len(matrices)
+    j = np.eye(subarray)[::-1]
+    return 0.5 * (r + j @ r.conj() @ j)

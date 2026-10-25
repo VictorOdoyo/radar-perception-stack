@@ -43,3 +43,10 @@ def test_music_noise_subspace_nulls_known_steering_vector():
     r = np.outer(a, a.conj()) + 0.1 * np.eye(8)
     grid = np.linspace(-0.5, 0.5, 501)
     assert grid[np.argmax(m.music(r, grid))] == pytest.approx(angle)
+
+
+def test_smoothed_covariance_is_hermitian_with_declared_smaller_aperture():
+    x = np.tile(m.steering(0.2) + m.steering(-0.2), (20, 1))
+    r = m.spatial_smoothing(x)
+    assert r.shape == (5, 5) and np.allclose(r, r.conj().T)
+    assert np.linalg.matrix_rank(r, tol=1e-8) == 2
