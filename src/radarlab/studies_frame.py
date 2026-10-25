@@ -179,3 +179,7 @@ def ghosts(scale=1, seed=42):
 
 def clipping(scale=1, seed=42):
     return study("adc-saturation", "clipping", scale, seed)
+
+
+def calibration(scale=1, seed=42):
+    return study("receiver-calibration-error", "calibration", scale, seed)

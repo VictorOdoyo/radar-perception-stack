@@ -32,3 +32,8 @@ def test_ghost_scene_does_not_award_truth_for_reflected_path():
 
 def test_saturation_study_records_invalid_sensor_fraction():
     assert m.clipping()["summary"]["clipped_fraction"] > 0.5
+
+
+def test_calibration_error_study_retains_channel_distortion():
+    r = m.calibration()
+    assert r["parameters"]["variant"] == "calibration"
