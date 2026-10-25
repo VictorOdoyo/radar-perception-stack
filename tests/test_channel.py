@@ -44,3 +44,10 @@ def test_ghost_path_preserves_velocity_and_declares_delayed_range():
     a = m.ghost(Target())
     assert a.range_m == 35 and a.receding_m_s == 5
     assert abs(a.amplitude) == pytest.approx(0.3)
+
+
+def test_clutter_slow_time_is_correlated_and_seeded():
+    a = m.clutter(correlation=0.98)
+    correlation = np.vdot(a[:-1], a[1:]).real / np.vdot(a[:-1], a[:-1]).real
+    assert correlation > 0.95
+    assert np.array_equal(a, m.clutter(correlation=0.98))

@@ -72,3 +72,21 @@ def ghost(target, extra_range_m=5, amplitude_ratio=0.3, angle_offset_rad=0.05):
         amplitude=target.amplitude * positive(amplitude_ratio, allow_zero=True),
         angle_rad=target.angle_rad + angle_offset_rad,
     )
+
+
+def clutter(model=None, power=1, correlation=0.98, seed=42):
+    from .core import positive, stream
+    from .waveform import Radar
+
+    p = Radar() if model is None else model
+    if not 0 <= correlation < 1:
+        raise ValueError("stationary AR correlation in [0,1) required")
+    rng = stream(seed, "slow-time-clutter")
+    z = (
+        rng.normal(size=(p.chirps, p.samples, p.receivers))
+        + 1j * rng.normal(size=(p.chirps, p.samples, p.receivers))
+    ) * np.sqrt(positive(power, allow_zero=True) / 2)
+    out = z.copy()
+    for k in range(1, p.chirps):
+        out[k] = correlation * out[k - 1] + np.sqrt(1 - correlation**2) * z[k]
+    return out
