@@ -25,3 +25,10 @@ def test_adc_quantization_error_is_component_half_lsb_when_unclipped():
     r = m.adc(x)
     assert not r["clipped"][0] and r["clipped"][1]
     assert abs((r["iq"][0] - x[0]).real) <= r["lsb"] / 2
+
+
+def test_phase_noise_preserves_magnitudes_and_common_receiver_phase():
+    x = np.ones((4, 32, 3), complex)
+    a = m.phase_noise(x)
+    assert np.allclose(abs(a), 1)
+    assert np.array_equal(a[:, :, 0], a[:, :, 2])

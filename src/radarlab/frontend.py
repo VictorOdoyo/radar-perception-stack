@@ -60,3 +60,12 @@ def adc(signal, full_scale=4, bits=12):
         "clipped": (abs(x.real) > rail) | (abs(x.imag) > rail),
         "lsb": lsb,
     }
+
+
+def phase_noise(cube, std_step_rad=0.01, seed=42):
+    from .core import finite, positive, stream
+
+    x = finite(cube, ndim=3)
+    rng = stream(seed, "oscillator-phase")
+    phase = np.cumsum(rng.normal(0, positive(std_step_rad, allow_zero=True), size=x.shape[:2]), axis=1)
+    return x * np.exp(1j * phase[:, :, None])
