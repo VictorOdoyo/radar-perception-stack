@@ -59,6 +59,8 @@ def suppress(power, detections, radius=(2, 2), maximum=100):
     integer(maximum)
     if mask.dtype != bool or mask.shape != p.shape:
         raise ValueError("aligned boolean detections required")
+    if len(radius) != 2:
+        raise ValueError("two-dimensional suppression radius required")
     for v in radius:
         integer(v, 0)
     indices = np.argwhere(mask)

@@ -52,3 +52,8 @@ def test_os_cfar_retains_target_with_contaminated_training_cells():
 def test_wilson_interval_remains_nonzero_at_zero_false_alarms():
     low, high = m.wilson(0, 1000)
     assert low == 0 and 0.003 < high < 0.004
+
+
+def test_nms_rejects_wrong_dimensional_neighborhood():
+    with pytest.raises(ValueError):
+        m.suppress(np.ones((10, 10)), np.ones((10, 10), bool), radius=(2,))
