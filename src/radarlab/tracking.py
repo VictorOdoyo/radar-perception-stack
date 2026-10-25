@@ -81,3 +81,27 @@ def correct_radial(state, covariance, receding_m_s, std_m_s=0.3, gate=9):
     j = np.eye(4) - np.outer(gain, h)
     post = j @ p @ j.T + np.outer(gain, gain) * r
     return x + gain * y, (post + post.T) / 2, True
+
+
+def assign(cost, gate=9.21034):
+    from scipy.optimize import linear_sum_assignment
+
+    from .core import finite, positive
+
+    c = finite(cost, real=True, ndim=2)
+    limit = positive(gate)
+    if np.any(c < 0):
+        raise ValueError("nonnegative association costs required")
+    rows, cols = c.shape
+    if rows == 0 or cols == 0:
+        return [], list(range(rows)), list(range(cols))
+    augmented = np.full((rows, cols + rows), limit + 1e6)
+    augmented[:, :cols] = np.where(c <= limit, c, limit + 1e6)
+    augmented[np.arange(rows), cols + np.arange(rows)] = limit
+    rr, cc = linear_sum_assignment(augmented)
+    matches = [(int(i), int(j)) for i, j in zip(rr, cc, strict=True) if j < cols and c[i, j] <= limit]
+    return (
+        matches,
+        [i for i in range(rows) if all(i != a for a, _ in matches)],
+        [j for j in range(cols) if all(j != b for _, b in matches)],
+    )

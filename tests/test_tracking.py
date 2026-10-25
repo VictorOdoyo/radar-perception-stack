@@ -33,3 +33,8 @@ def test_joseph_update_reduces_position_uncertainty_and_rejects_outlier():
 def test_radial_update_changes_observable_velocity():
     x, p, ok = m.correct_radial([0, 30, 2, 0], np.eye(4), 1, gate=100)
     assert ok and x[3] > 0.8 and p[3, 3] < 1
+
+
+def test_global_assignment_preserves_feasible_matches_and_unmatched_rows():
+    a, missed, new = m.assign([[1, 2], [1.1, 100], [100, 100]])
+    assert sorted(a) == [(0, 1), (1, 0)] and missed == [2] and new == []
