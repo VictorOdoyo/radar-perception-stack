@@ -79,3 +79,44 @@ def replay(rows):
             }
         )
     return history
+
+
+def report(rows):
+    from .results import curve, make
+
+    history = replay(rows)
+    time = np.array([r["time_s"] for r in history])
+    counts = np.array([len(r["tracks"]) for r in history])
+    detections = np.array([r["detections"] for r in history])
+    records = []
+    for frame in history:
+        for t in frame["tracks"]:
+            records.append(
+                {
+                    "time_s": frame["time_s"],
+                    "track_id": t["id"],
+                    "x_m": float(t["state"][0]),
+                    "y_m": float(t["state"][1]),
+                    "coasting_misses": t["misses"],
+                }
+            )
+    return make(
+        "external-detection-replay",
+        {"rows": rows},
+        {"frames": len(history), "final_confirmed_tracks": int(counts[-1])},
+        {"time_s": time, "confirmed": counts, "detections": detections},
+        [
+            curve(
+                "Recorded observations and confirmed predictions",
+                "time_s",
+                [("detections", "Valid detections"), ("confirmed", "Confirmed including coast")],
+                "Time (s)",
+                "Count",
+            )
+        ],
+        {"tracks": records},
+        [
+            "SI polar detections with supplied uncertainty; no automatic calibration or truth-based correction.",
+            "Invalid rows preserve frame timestamps and cause prediction without measurement.",
+        ],
+    )
