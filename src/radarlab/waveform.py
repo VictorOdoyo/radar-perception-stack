@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+import numpy as np
+
 C = 299792458.0
 
 
@@ -43,3 +45,12 @@ class Radar:
     @property
     def spacing_m(self):
         return self.spacing_wavelength * self.wavelength
+
+
+def coordinates(model=None):
+    p = Radar() if model is None else model
+    return {
+        "fast_s": np.arange(p.samples) / p.sample_hz,
+        "slow_s": np.arange(p.chirps) * p.repetition_s,
+        "receiver_m": np.arange(p.receivers) * p.spacing_m,
+    }
