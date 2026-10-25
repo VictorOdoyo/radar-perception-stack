@@ -37,3 +37,10 @@ def test_fft_axes_match_independent_sampling_frequencies():
     a = m.axes(p)
     assert a["beat_hz"][1] == p.sample_hz / p.samples
     assert a["receding_m_s"][p.chirps // 2] == 0
+
+
+def test_stationary_removal_rejects_zero_doppler_and_retains_nonzero_bin():
+    x = np.ones((64, 8, 2), complex)
+    assert np.allclose(m.remove_stationary(x), 0)
+    moving = np.exp(2j * np.pi * 5 * np.arange(64) / 64)[:, None, None] * x
+    assert np.allclose(m.remove_stationary(moving), moving)

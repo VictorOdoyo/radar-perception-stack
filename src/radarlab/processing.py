@@ -55,3 +55,10 @@ def axes(model=None, range_size=None, doppler_size=None):
         "apparent_range_m": np.arange(nr // 2) * p.sample_hz / nr * C / (2 * p.slope),
         "receding_m_s": np.fft.fftshift(np.fft.fftfreq(nd, p.repetition_s)) * p.wavelength / 2,
     }
+
+
+def remove_stationary(cube):
+    from .core import finite
+
+    x = finite(cube, ndim=3)
+    return x - x.mean(axis=0, keepdims=True)
