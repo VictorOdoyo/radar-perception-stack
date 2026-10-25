@@ -36,3 +36,11 @@ def test_noise_bandwidth_and_noise_figure_scale_linearly():
     assert m.thermal_noise(1e6, noise_figure_db=10) == pytest.approx(
         10 * m.thermal_noise(1e6, noise_figure_db=0)
     )
+
+
+def test_ghost_path_preserves_velocity_and_declares_delayed_range():
+    from radarlab.waveform import Target
+
+    a = m.ghost(Target())
+    assert a.range_m == 35 and a.receding_m_s == 5
+    assert abs(a.amplitude) == pytest.approx(0.3)

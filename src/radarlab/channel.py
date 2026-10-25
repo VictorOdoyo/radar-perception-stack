@@ -59,3 +59,16 @@ def thermal_noise(bandwidth_hz, temperature_k=290, noise_figure_db=6):
     if not np.isfinite(noise_figure_db) or noise_figure_db < 0:
         raise ValueError("nonnegative finite noise figure required")
     return 1.380649e-23 * positive(temperature_k) * positive(bandwidth_hz) * 10 ** (noise_figure_db / 10)
+
+
+def ghost(target, extra_range_m=5, amplitude_ratio=0.3, angle_offset_rad=0.05):
+    from dataclasses import replace
+
+    from .core import positive
+
+    return replace(
+        target,
+        range_m=target.range_m + positive(extra_range_m),
+        amplitude=target.amplitude * positive(amplitude_ratio, allow_zero=True),
+        angle_rad=target.angle_rad + angle_offset_rad,
+    )
