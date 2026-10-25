@@ -15,3 +15,8 @@ def test_two_target_scene_resolves_distinct_ranges_and_dopplers():
 
 def test_close_target_study_retains_missed_objects():
     assert m.close()["summary"]["missed_targets"] >= 1
+
+
+def test_clutter_scene_records_declared_correlated_interference():
+    r = m.cluttered()
+    assert r["parameters"]["variant"] == "clutter"

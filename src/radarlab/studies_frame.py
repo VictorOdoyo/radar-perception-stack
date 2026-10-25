@@ -163,3 +163,7 @@ def two(scale=1, seed=42):
 
 def close(scale=1, seed=42):
     return study("unresolved-targets", "close", scale, seed)
+
+
+def cluttered(scale=1, seed=42):
+    return study("clutter-contamination", "clutter", scale, seed)
