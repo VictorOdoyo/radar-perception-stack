@@ -61,3 +61,23 @@ def correct(state, covariance, position, measurement_covariance, gate=9.21034):
     j = np.eye(4) - gain @ h
     result = j @ p @ j.T + gain @ measurement_covariance @ gain.T
     return x + gain @ y, (result + result.T) / 2, True, nis
+
+
+def correct_radial(state, covariance, receding_m_s, std_m_s=0.3, gate=9):
+    from .core import positive
+    from .geometry import radial_measurement
+
+    x, p = validate_state(state, covariance)
+    value, h = radial_measurement(x)
+    r = positive(std_m_s) ** 2
+    if not np.isfinite(receding_m_s):
+        raise ValueError("finite radial velocity required")
+    y = receding_m_s - value
+    s = float(h @ p @ h + r)
+    nis = y * y / s
+    if nis > positive(gate):
+        return x.copy(), p.copy(), False
+    gain = p @ h / s
+    j = np.eye(4) - np.outer(gain, h)
+    post = j @ p @ j.T + np.outer(gain, gain) * r
+    return x + gain * y, (post + post.T) / 2, True
