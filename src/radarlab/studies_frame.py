@@ -187,3 +187,7 @@ def calibration(scale=1, seed=42):
 
 def oscillator(scale=1, seed=42):
     return study("oscillator-phase-noise", "phase-noise", scale, seed)
+
+
+def nonlinear(scale=1, seed=42):
+    return study("chirp-nonlinearity", "nonlinear", scale, seed)

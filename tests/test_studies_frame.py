@@ -41,3 +41,7 @@ def test_calibration_error_study_retains_channel_distortion():
 
 def test_phase_noise_scene_keeps_finite_raw_iq():
     assert np.isfinite(m.oscillator()["arrays"]["iq"]).all()
+
+
+def test_nonlinear_chirp_study_records_variant():
+    assert m.nonlinear()["parameters"]["variant"] == "nonlinear"
