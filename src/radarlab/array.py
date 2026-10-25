@@ -48,3 +48,14 @@ def covariance(snapshots, loading=0.001):
     r = x.T @ x.conj() / len(x)
     r = (r + r.conj().T) / 2
     return r + np.eye(r.shape[0]) * positive(loading, allow_zero=True) * np.trace(r).real / r.shape[0]
+
+
+def mvdr(covariance_matrix, angle_grid, spacing_wavelength=0.5):
+    from .core import finite
+
+    r = finite(covariance_matrix, ndim=2)
+    if r.shape[0] != r.shape[1] or not np.allclose(r, r.conj().T) or np.min(np.linalg.eigvalsh(r)) <= 0:
+        raise ValueError("Hermitian positive definite covariance required")
+    a = steering(angle_grid, len(r), spacing_wavelength)
+    solved = np.linalg.solve(r, a.T)
+    return 1 / np.maximum(np.einsum("ij,ji->i", a.conj(), solved).real, 1e-30)

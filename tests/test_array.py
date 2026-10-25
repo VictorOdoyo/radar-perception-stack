@@ -26,3 +26,12 @@ def test_spatial_covariance_is_hermitian_psd_and_loaded():
     r = m.covariance(x, 0.01)
     assert np.allclose(r, r.conj().T)
     assert np.min(np.linalg.eigvalsh(r)) > 0
+
+
+def test_mvdr_peak_matches_known_covariance_source():
+    angle = 0.2
+    a = m.steering(angle)
+    r = np.outer(a, a.conj()) + 0.1 * np.eye(8)
+    grid = np.linspace(-0.5, 0.5, 501)
+    power = m.mvdr(r, grid)
+    assert grid[np.argmax(power)] == pytest.approx(angle)
