@@ -1,6 +1,6 @@
 # Computed experiment gallery
 
-Twenty-four default studies computed from clean source revision [`af791fbe32a9`](https://github.com/VictorOdoyo/radar-perception-stack/commit/af791fbe32a93bb2174ccbd885b148ddbea28e4d).
+Twenty-four default studies computed from clean source revision [`df371aecc0a1`](https://github.com/VictorOdoyo/radar-perception-stack/commit/df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da).
 All values below come from the sealed captures. Each case directory contains the complete
 NPZ arrays, CSV tables, parameters, provenance, plot and HTML report.
 
