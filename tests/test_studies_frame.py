@@ -17,7 +17,7 @@ def test_close_target_study_retains_missed_objects():
     assert m.close()["summary"]["missed_targets"] >= 1
 
 
-def test_clutter_scene_records_declared_correlated_interference():
+def test_clutter_increases_receiver_power():
     r = m.cluttered()
     assert np.mean(abs(r["arrays"]["iq"]) ** 2) > 10 * np.mean(abs(m.nominal()["arrays"]["iq"]) ** 2)
 
@@ -34,21 +34,23 @@ def test_saturation_study_records_invalid_sensor_fraction():
     assert m.clipping()["summary"]["clipped_fraction"] > 0.5
 
 
-def test_calibration_error_study_retains_channel_distortion():
+def test_calibration_error_biases_estimated_angle():
     r = m.calibration()
     truth = 0.2
     selected = min(r["tables"]["detections"], key=lambda d: abs(d["range_m"] - 30))
     assert abs(selected["angle_rad"] - truth) > 0.02
 
 
-def test_phase_noise_scene_keeps_finite_raw_iq():
+def test_phase_noise_reduces_coherent_peak():
     impaired = m.oscillator()["arrays"]["rd"]
     nominal = m.nominal()["arrays"]["rd"]
     assert np.max(abs(impaired[:, :, 0]) ** 2) < np.max(abs(nominal[:, :, 0]) ** 2)
 
 
-def test_nonlinear_chirp_study_records_variant():
-    assert m.nonlinear()["parameters"]["variant"] == "nonlinear"
+def test_chirp_curvature_reduces_coherent_peak():
+    impaired = m.nonlinear()["arrays"]["rd"]
+    nominal = m.nominal()["arrays"]["rd"]
+    assert np.max(abs(impaired[:, :, 0]) ** 2) < np.max(abs(nominal[:, :, 0]) ** 2)
 
 
 def test_low_snr_study_scores_any_missing_target_explicitly():
