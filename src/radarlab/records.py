@@ -33,13 +33,14 @@ def write_npz(record, path):
 
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(
-        path,
-        time_s=record.time_s,
-        iq=record.iq,
-        valid=record.valid,
-        metadata=np.array(json.dumps({"schema": 1, "radar": asdict(record.model)}, sort_keys=True)),
-    )
+    with path.open("wb") as stream:
+        np.savez_compressed(
+            stream,
+            time_s=record.time_s,
+            iq=record.iq,
+            valid=record.valid,
+            metadata=np.array(json.dumps({"schema": 1, "radar": asdict(record.model)}, sort_keys=True)),
+        )
     return path
 
 

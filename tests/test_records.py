@@ -32,3 +32,12 @@ def test_invalid_record_frames_are_not_processed_as_measurements():
     p = Radar(chirps=4, samples=16, receivers=2)
     r = m.IQRecord([0, 0.1], np.ones((2, 4, 16, 2), complex), p, np.zeros(2, bool))
     assert all(row["detections"] == 0 for row in m.replay(r))
+
+
+def test_iq_writer_returns_the_file_it_actually_created(tmp_path):
+    from radarlab.waveform import Radar
+
+    p = Radar(chirps=4, samples=16, receivers=2)
+    r = m.IQRecord([0, 0.1], np.zeros((2, 4, 16, 2), complex), p, np.ones(2, bool))
+    path = m.write_npz(r, tmp_path / "capture.data")
+    assert path.exists() and m.read_npz(path).model == p
