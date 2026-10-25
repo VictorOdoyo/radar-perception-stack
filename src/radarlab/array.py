@@ -37,3 +37,14 @@ def phase_angle(snapshot, spacing_wavelength=0.5):
     if abs(correlation) < 1e-12:
         raise ValueError("unobservable array phase")
     return float(np.arcsin(np.clip(np.angle(correlation) / (2 * np.pi * spacing), -1, 1)))
+
+
+def covariance(snapshots, loading=0.001):
+    from .core import finite, positive
+
+    x = finite(snapshots, ndim=2)
+    if x.shape[0] < 2 or x.shape[1] < 2:
+        raise ValueError("multiple snapshots and receivers required")
+    r = x.T @ x.conj() / len(x)
+    r = (r + r.conj().T) / 2
+    return r + np.eye(r.shape[0]) * positive(loading, allow_zero=True) * np.trace(r).real / r.shape[0]

@@ -19,3 +19,10 @@ def test_phase_angle_recovers_signed_angle_without_scan_quantization():
     assert m.phase_angle(m.steering(-0.3)) == pytest.approx(-0.3)
     with pytest.raises(ValueError):
         m.phase_angle(m.steering(0.2), 0.7)
+
+
+def test_spatial_covariance_is_hermitian_psd_and_loaded():
+    x = np.tile(m.steering(0.2), (20, 1))
+    r = m.covariance(x, 0.01)
+    assert np.allclose(r, r.conj().T)
+    assert np.min(np.linalg.eigvalsh(r)) > 0
