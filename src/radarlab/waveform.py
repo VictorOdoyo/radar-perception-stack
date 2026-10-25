@@ -71,23 +71,23 @@ def dechirp(received, transmitted):
     return tx * np.conj(rx)
 
 
-def beat_frequency(range_m, closing_m_s=0, model=None):
+def beat_frequency(range_m, receding_m_s=0, model=None):
     from .core import finite
 
     p = Radar() if model is None else model
     r = finite(range_m, real=True)
-    v = finite(closing_m_s, real=True)
+    v = finite(receding_m_s, real=True)
     if np.any(r < 0):
         raise ValueError("nonnegative ranges required")
     return 2 * p.slope * r / C + 2 * v / p.wavelength
 
 
-def range_from_beat(beat_hz, closing_m_s=0, model=None):
+def range_from_beat(beat_hz, receding_m_s=0, model=None):
     from .core import finite
 
     p = Radar() if model is None else model
     return (
-        (finite(beat_hz, real=True) - 2 * finite(closing_m_s, real=True) / p.wavelength) * C / (2 * p.slope)
+        (finite(beat_hz, real=True) - 2 * finite(receding_m_s, real=True) / p.wavelength) * C / (2 * p.slope)
     )
 
 
@@ -96,7 +96,7 @@ def limits(model=None):
     return {
         "range_resolution_m": C / (2 * p.slope * (p.samples / p.sample_hz)),
         "positive_range_nyquist_m": p.sample_hz * C / (4 * p.slope),
-        "closing_nyquist_m_s": p.wavelength / (4 * p.repetition_s),
+        "receding_nyquist_m_s": p.wavelength / (4 * p.repetition_s),
         "velocity_bin_m_s": p.wavelength / (2 * p.chirps * p.repetition_s),
     }
 
@@ -104,7 +104,7 @@ def limits(model=None):
 @dataclass(frozen=True)
 class Target:
     range_m: float = 30.0
-    closing_m_s: float = 5.0
+    receding_m_s: float = 5.0
     angle_rad: float = 0.15
     amplitude: complex = 1.0
     phase_rad: float = 0.0
@@ -113,7 +113,7 @@ class Target:
         from .core import finite, positive
 
         positive(self.range_m)
-        finite([self.closing_m_s, self.angle_rad, self.phase_rad], real=True)
+        finite([self.receding_m_s, self.angle_rad, self.phase_rad], real=True)
         finite(self.amplitude)
         if abs(self.angle_rad) > np.pi / 2:
             raise ValueError("front hemisphere azimuth required")

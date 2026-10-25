@@ -39,7 +39,7 @@ def test_limits_use_observed_bandwidth_and_coherent_frame_duration():
     p = m.Radar()
     a = m.limits(p)
     assert a["range_resolution_m"] == pytest.approx(m.C / (2 * p.bandwidth_hz))
-    assert a["velocity_bin_m_s"] == pytest.approx(2 * a["closing_nyquist_m_s"] / p.chirps)
+    assert a["velocity_bin_m_s"] == pytest.approx(2 * a["receding_nyquist_m_s"] / p.chirps)
 
 
 def test_target_descriptor_rejects_nonphysical_geometry():
