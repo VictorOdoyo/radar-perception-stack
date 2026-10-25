@@ -41,3 +41,12 @@ def radial_measurement(state):
     value = float(unit @ vel)
     jac = np.r_[(vel - unit * value) / r, unit]
     return value, jac
+
+
+def ego_compensate(receding_m_s, angle_rad, ego_velocity):
+    e = finite(ego_velocity, real=True)
+    if e.shape != (2,):
+        raise ValueError("ego Cartesian velocity required")
+    a = finite(angle_rad, real=True)
+    v = finite(receding_m_s, real=True)
+    return v + e[0] * np.sin(a) + e[1] * np.cos(a)

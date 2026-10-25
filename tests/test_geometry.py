@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from radarlab import geometry as m
 
@@ -31,3 +32,7 @@ def test_radial_velocity_jacobian_matches_finite_difference():
     )
     assert np.allclose(j, numerical, atol=1e-9)
     assert v > 0
+
+
+def test_ego_compensation_restores_stationary_world_target():
+    assert m.ego_compensate(-10, 0, [0, 10]) == pytest.approx(0)
