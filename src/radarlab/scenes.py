@@ -19,6 +19,9 @@ def sequence(frames=30, period_s=0.1, model=None, seed=42, drop_indices=(), turn
     from .core import integer, positive
     from .waveform import Radar
 
+    integer(seed, 0)
+    if seed >= 2**32:
+        raise ValueError("32-bit sequence seed required")
     integer(frames, 3)
     period = positive(period_s)
     p = Radar() if model is None else model
