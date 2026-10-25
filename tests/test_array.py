@@ -50,3 +50,10 @@ def test_smoothed_covariance_is_hermitian_with_declared_smaller_aperture():
     r = m.spatial_smoothing(x)
     assert r.shape == (5, 5) and np.allclose(r, r.conj().T)
     assert np.linalg.matrix_rank(r, tol=1e-8) == 2
+
+
+def test_angle_bound_improves_with_snr_snapshots_and_aperture():
+    base = m.angle_crlb(0, 10)
+    assert m.angle_crlb(0, 20) == pytest.approx(base / 2)
+    assert m.angle_crlb(0, 10, snapshots=2) == pytest.approx(base / 2)
+    assert m.angle_crlb(0.5, 10) > base

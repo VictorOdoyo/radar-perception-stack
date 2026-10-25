@@ -86,3 +86,17 @@ def spatial_smoothing(snapshots, subarray=5):
     r = sum(matrices) / len(matrices)
     j = np.eye(subarray)[::-1]
     return 0.5 * (r + j @ r.conj() @ j)
+
+
+def angle_crlb(angle_rad, snr_linear, snapshots=1, receivers=8, spacing_wavelength=0.5):
+    from .core import integer, positive
+
+    snr = positive(snr_linear)
+    integer(snapshots)
+    integer(receivers, 2)
+    spacing = positive(spacing_wavelength)
+    if not np.isfinite(angle_rad) or abs(angle_rad) >= np.pi / 2:
+        raise ValueError("interior observable angle required")
+    positions = np.arange(receivers) - (receivers - 1) / 2
+    information = 2 * snapshots * snr * (2 * np.pi * spacing * np.cos(angle_rad)) ** 2 * np.sum(positions**2)
+    return 1 / information
