@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from radarlab import studies_analysis as m
 
@@ -30,3 +31,7 @@ def test_robust_ego_study_outperforms_unfiltered_least_squares():
 
 def test_dual_prf_study_preserves_out_of_interval_velocity():
     assert m.dual_prf()["summary"]["maximum_error_m_s"] < 1e-9
+
+
+def test_ambiguity_study_has_unit_zero_offset_response():
+    assert m.ambiguity_map()["summary"]["zero_offset_magnitude"] == pytest.approx(1)

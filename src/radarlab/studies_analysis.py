@@ -266,3 +266,37 @@ def dual_prf(scale=1, seed=42):
             "Noiseless paired velocities, same object association, unique bounded candidate required."
         ],
     )
+
+
+def ambiguity_map(scale=1, seed=42):
+    from .processing import power_db
+    from .spectral import ambiguity
+
+    n = 128 * scale
+    fs = 1e6
+    t = np.arange(n) / fs
+    x = np.exp(1j * np.pi * 3e9 * t * t)
+    delays = np.arange(-40 * scale, 40 * scale + 1, scale)
+    frequency = np.linspace(-30000, 30000, 81)
+    response = ambiguity(x, delays, frequency, fs)
+    a = {"ambiguity_complex": response, "ambiguity_db": power_db(abs(response) ** 2)}
+    plot = {
+        "kind": "image",
+        "title": "Normalized complex chirp ambiguity",
+        "array": "ambiguity_db",
+        "x": (delays / fs * 1e6).tolist(),
+        "y": (frequency / 1000).tolist(),
+        "xlabel": "Delay (us)",
+        "ylabel": "Doppler (kHz)",
+        "colorbar": "Normalized power (dB)",
+        "component": "real",
+        "mask": None,
+    }
+    return make(
+        "chirp-ambiguity",
+        {"sample_hz": fs, "samples": n, "slope_hz_s": 3e9},
+        {"zero_offset_magnitude": float(abs(response[40, 40]))},
+        a,
+        [plot],
+        assumptions=["Discrete finite waveform ambiguity; zero-padding is not extra bandwidth."],
+    )
