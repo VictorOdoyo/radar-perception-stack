@@ -19,7 +19,7 @@ def test_close_target_study_retains_missed_objects():
 
 def test_clutter_scene_records_declared_correlated_interference():
     r = m.cluttered()
-    assert r["parameters"]["variant"] == "clutter"
+    assert np.mean(abs(r["arrays"]["iq"]) ** 2) > 10 * np.mean(abs(m.nominal()["arrays"]["iq"]) ** 2)
 
 
 def test_clutter_filtered_scene_retains_moving_target():
