@@ -46,3 +46,34 @@ def detect(cube, model=None, false_alarm=1e-4, clutter_remove=False, window_kind
             }
         )
     return {**data, "cfar": cfar, "detections": detections}
+
+
+def track_frames(frames, times, model=None, tracker=None, **detector_options):
+    from .core import timebase
+    from .tracking import Tracker
+
+    t = timebase(times)
+    data = list(frames)
+    if len(data) != len(t):
+        raise ValueError("one IQ frame per timestamp required")
+    manager = Tracker() if tracker is None else tracker
+    history = []
+    for time, cube in zip(t, data, strict=True):
+        result = detect(cube, model, **detector_options)
+        tracks = manager.update(time, result["detections"])
+        history.append(
+            {
+                "time_s": float(time),
+                "detections": result["detections"],
+                "tracks": [
+                    {
+                        "id": track.identifier,
+                        "state": track.state.copy(),
+                        "covariance": track.covariance.copy(),
+                        "misses": track.misses,
+                    }
+                    for track in tracks
+                ],
+            }
+        )
+    return history
