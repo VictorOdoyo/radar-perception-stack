@@ -20,3 +20,11 @@ def test_multi_prf_unwrap_recovers_velocity_outside_single_interval():
     period = np.array([38.0, 31.0])
     measured = (truth + period / 2) % period - period / 2
     assert m.unwrap_velocity(measured, period, maximum_speed=80) == pytest.approx(truth)
+
+
+def test_angle_fft_recovers_half_wavelength_array_direction():
+    from radarlab.array import steering
+
+    a = m.angle_fft(steering(0.3))
+    j = np.argmax(np.where(a["valid"], a["power"], -1))
+    assert abs(a["angle_rad"][j] - 0.3) < 0.01

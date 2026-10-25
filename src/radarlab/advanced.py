@@ -29,3 +29,17 @@ def unwrap_velocity(measured, periods, maximum_speed=100, tolerance=0.1):
     if len(valid) != 1:
         raise ValueError("velocity ambiguity unresolved or inconsistent")
     return float(valid[0])
+
+
+def angle_fft(snapshot, spacing_wavelength=0.5, fft_size=512):
+    from .core import finite, integer, positive
+
+    x = finite(snapshot, ndim=1)
+    spacing = positive(spacing_wavelength)
+    integer(fft_size, 2)
+    if fft_size < len(x):
+        raise ValueError("nontruncating angle FFT required")
+    u = np.fft.fftshift(np.fft.fftfreq(fft_size)) / spacing
+    valid = abs(u) <= 1
+    spectrum = np.fft.fftshift(np.fft.fft(x, fft_size)) / len(x)
+    return {"angle_rad": np.arcsin(np.clip(u, -1, 1)), "power": abs(spectrum) ** 2, "valid": valid}
