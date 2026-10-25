@@ -141,3 +141,52 @@ def os_robustness(scale=1, seed=42):
             "Independent exponential reference cells; specified complex Gaussian CUT noise and deterministic target amplitude."
         ],
     )
+
+
+def spatial_spectra(scale=1, seed=42):
+    from .array import covariance, music, mvdr, steering
+    from .core import stream
+    from .processing import power_db
+
+    rng = stream(seed, "spatial-sources")
+    angles = np.linspace(-0.7, 0.7, 701 * scale)
+    source_angles = [-0.2, 0.25]
+    a = steering(source_angles)
+    s = (rng.normal(size=(300, 2)) + 1j * rng.normal(size=(300, 2))) / np.sqrt(2)
+    x = s @ a + 0.15 * (rng.normal(size=(300, 8)) + 1j * rng.normal(size=(300, 8))) / np.sqrt(2)
+    r = covariance(x)
+    conventional = np.einsum("ij,jk,ik->i", steering(angles).conj(), r, steering(angles)).real / 64
+    capon = mvdr(r, angles)
+    subspace = music(r, angles, 2)
+    arrays = {
+        "angle_deg": np.rad2deg(angles),
+        "bartlett_db": power_db(conventional, max(conventional)),
+        "mvdr_db": power_db(capon, max(capon)),
+        "music_db": power_db(subspace, max(subspace)),
+        "covariance": r,
+        "snapshots": x,
+    }
+    return make(
+        "spatial-spectrum-comparison",
+        {
+            "seed": seed,
+            "source_angles_rad": source_angles,
+            "snapshots": 300,
+            "receivers": 8,
+            "noise_component_scale": 0.15,
+        },
+        {"covariance_condition": float(np.linalg.cond(r))},
+        arrays,
+        [
+            curve(
+                "Same covariance, different spatial estimators",
+                "angle_deg",
+                [("bartlett_db", "Bartlett"), ("mvdr_db", "MVDR"), ("music_db", "MUSIC (2 sources assumed)")],
+                "Azimuth (deg)",
+                "Normalized spectrum (dB)",
+            )
+        ],
+        assumptions=[
+            "MUSIC source count is explicitly assumed; not estimated from ground truth inside a perception pipeline."
+        ],
+    )

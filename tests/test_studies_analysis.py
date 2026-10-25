@@ -1,3 +1,5 @@
+import numpy as np
+
 from radarlab import studies_analysis as m
 
 
@@ -14,3 +16,8 @@ def test_window_cfar_study_uses_actual_fft_noise():
 def test_os_study_retains_detection_under_reference_contamination():
     r = m.os_robustness()
     assert r["summary"]["final_os_pd"] > r["summary"]["final_ca_pd"]
+
+
+def test_spatial_spectrum_study_retains_complex_covariance():
+    r = m.spatial_spectra()
+    assert np.iscomplexobj(r["arrays"]["covariance"])
