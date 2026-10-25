@@ -159,3 +159,7 @@ def nominal(scale=1, seed=42):
 
 def two(scale=1, seed=42):
     return study("two-targets", "two", scale, seed)
+
+
+def close(scale=1, seed=42):
+    return study("unresolved-targets", "close", scale, seed)
