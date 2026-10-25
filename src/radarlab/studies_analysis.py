@@ -101,3 +101,43 @@ def window_cfar(scale=1, seed=42):
             "Wilson intervals summarize counts; overlapping CFAR windows correlate decisions and these are not independent-cell confidence guarantees."
         ],
     )
+
+
+def os_robustness(scale=1, seed=42):
+    from .core import stream
+    from .detection import ca_multiplier, os_multiplier
+
+    rng = stream(seed, "os-contamination")
+    n = 32
+    k = 24
+    trials = 10000 * scale
+    contamination = np.arange(0, 9)
+    ca = []
+    os = []
+    for count in contamination:
+        training = rng.exponential(size=(trials, n))
+        training[:, :count] += 100
+        cut = abs(5 + (rng.normal(size=trials) + 1j * rng.normal(size=trials)) / np.sqrt(2)) ** 2
+        ca.append(float(np.mean(cut > ca_multiplier(n, 0.001) * training.mean(axis=1))))
+        os.append(
+            float(np.mean(cut > os_multiplier(n, k, 0.001) * np.partition(training, k - 1, axis=1)[:, k - 1]))
+        )
+    a = {"contaminated_cells": contamination, "ca_pd": ca, "os_pd": os}
+    return make(
+        "os-cfar-contamination",
+        {"seed": seed, "training_cells": n, "rank": k, "trials": trials, "pfa": 0.001, "target_amplitude": 5},
+        {"final_ca_pd": ca[-1], "final_os_pd": os[-1]},
+        a,
+        [
+            curve(
+                "Conditional detection under reference contamination",
+                "contaminated_cells",
+                [("ca_pd", "CA"), ("os_pd", "OS")],
+                "Strong reference cells",
+                "Detection fraction",
+            )
+        ],
+        assumptions=[
+            "Independent exponential reference cells; specified complex Gaussian CUT noise and deterministic target amplitude."
+        ],
+    )
