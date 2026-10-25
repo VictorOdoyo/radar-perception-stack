@@ -68,3 +68,20 @@ def test_tracker_confirms_measured_motion_coasts_and_deletes_without_truth():
     assert r.update(0.7, []) == []
     with pytest.raises(ValueError):
         r.update(0.7, [])
+
+
+def test_rts_smoother_reduces_early_position_uncertainty():
+    times = np.arange(5) * 0.1
+    state = np.zeros(4)
+    covariance = np.eye(4)
+    states = []
+    covariances = []
+    for _ in times:
+        state, covariance = m.predict(state, covariance, 0.1)
+        state, covariance, _ok, _nis = m.correct(state, covariance, [0, 0], np.eye(2) * 0.1)
+        states.append(state)
+        covariances.append(covariance)
+    x = np.array(states)
+    p = np.array(covariances)
+    _state, cov = m.smooth(x, p, times)
+    assert cov[0, 0, 0] < p[0, 0, 0] and np.allclose(cov[-1], p[-1])

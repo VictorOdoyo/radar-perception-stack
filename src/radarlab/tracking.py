@@ -210,3 +210,23 @@ class Tracker:
             self.tracks.append(Track(self.next_id, x, p))
             self.next_id += 1
         return [t for t in self.tracks if t.confirmed]
+
+
+def smooth(filtered_states, filtered_covariances, times, process_noise=1):
+    from .core import finite, timebase
+
+    x = finite(filtered_states, real=True, ndim=2)
+    p = finite(filtered_covariances, real=True, ndim=3)
+    t = timebase(times)
+    if x.shape != (len(t), 4) or p.shape != (len(t), 4, 4):
+        raise ValueError("aligned saved CV states required")
+    out = x.copy()
+    cov = p.copy()
+    for k in range(len(t) - 2, -1, -1):
+        f, q = transition(t[k + 1] - t[k], process_noise)
+        pred = f @ p[k] @ f.T + q
+        gain = np.linalg.solve(pred, (p[k] @ f.T).T).T
+        out[k] = x[k] + gain @ (out[k + 1] - f @ x[k])
+        cov[k] = p[k] + gain @ (cov[k + 1] - pred) @ gain.T
+        cov[k] = (cov[k] + cov[k].T) / 2
+    return out, cov
