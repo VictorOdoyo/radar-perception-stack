@@ -137,3 +137,7 @@ def gap(scale=1, seed=42):
 
 def long_gap(scale=1, seed=42):
     return study("tracking-long-gap", scale, seed, range(10 * scale, 19 * scale))
+
+
+def maneuver(scale=1, seed=42):
+    return study("maneuver-model-mismatch", scale, seed, turn=True)

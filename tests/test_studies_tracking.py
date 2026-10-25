@@ -1,3 +1,5 @@
+import numpy as np
+
 from radarlab import studies_tracking as m
 
 
@@ -18,3 +20,9 @@ def test_long_gap_deletes_stale_tracks_and_records_identity_change():
     r = m.long_gap()
     assert r["summary"]["identity_switches"] >= 2
     assert r["arrays"]["track_count"][17] == 0
+
+
+def test_maneuver_scene_records_model_mismatch():
+    r = m.maneuver()
+    assert r["parameters"]["turn"]
+    assert np.max(r["arrays"]["truth"][:, 0, 2]) > 3
