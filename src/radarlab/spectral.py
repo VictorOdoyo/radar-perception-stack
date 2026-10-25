@@ -23,3 +23,17 @@ def ambiguity(signal, delay_samples, doppler_hz, sample_hz):
             shifted[:d] = x[-d:]
         result[:, k] = np.exp(2j * np.pi * f[:, None] * t) @ (x * np.conj(shifted)) / energy
     return result
+
+
+def micro_doppler(cube, amplitude_m, frequency_hz, model=None):
+    from .core import finite, positive
+    from .waveform import Radar, coordinates
+
+    p = Radar() if model is None else model
+    x = finite(cube, ndim=3)
+    if x.shape[0] != p.chirps:
+        raise ValueError("aligned slow-time frame required")
+    displacement = positive(amplitude_m, allow_zero=True) * np.sin(
+        2 * np.pi * positive(frequency_hz) * coordinates(p)["slow_s"]
+    )
+    return x * np.exp(4j * np.pi * displacement / p.wavelength)[:, None, None]
