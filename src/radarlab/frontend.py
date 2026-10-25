@@ -40,3 +40,23 @@ def correct_iq(signal, gain_ratio=1.05, phase_error_rad=0.03):
     if not np.isfinite(phase_error_rad) or abs(phase_error_rad) >= np.pi / 2:
         raise ValueError("invertible quadrature phase required")
     return x.real + 1j * (x.imag / gain - x.real * np.sin(phase_error_rad)) / np.cos(phase_error_rad)
+
+
+def adc(signal, full_scale=4, bits=12):
+    from .core import finite, integer, positive
+
+    x = finite(signal)
+    rail = positive(full_scale)
+    integer(bits, 2)
+    if bits > 24:
+        raise ValueError("ADC precision is at most 24 bits")
+    lsb = 2 * rail / (2**bits - 1)
+
+    def quantize(v):
+        return np.rint((np.clip(v, -rail, rail) + rail) / lsb) * lsb - rail
+
+    return {
+        "iq": quantize(x.real) + 1j * quantize(x.imag),
+        "clipped": (abs(x.real) > rail) | (abs(x.imag) > rail),
+        "lsb": lsb,
+    }
