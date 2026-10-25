@@ -41,3 +41,10 @@ def test_iq_writer_returns_the_file_it_actually_created(tmp_path):
     r = m.IQRecord([0, 0.1], np.zeros((2, 4, 16, 2), complex), p, np.ones(2, bool))
     path = m.write_npz(r, tmp_path / "capture.data")
     assert path.exists() and m.read_npz(path).model == p
+
+
+def test_iq_reader_rejects_nonobject_metadata_without_traceback(tmp_path):
+    p = tmp_path / "bad.npz"
+    np.savez(p, time_s=[0, 0.1], iq=np.zeros((2, 4, 16, 2)), valid=[True, True], metadata=np.array("[]"))
+    with pytest.raises(ValueError):
+        m.read_npz(p)

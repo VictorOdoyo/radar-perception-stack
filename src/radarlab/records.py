@@ -53,7 +53,7 @@ def read_npz(path):
         if set(z.files) != {"time_s", "iq", "valid", "metadata"}:
             raise ValueError("unexpected IQ record fields")
         meta = json.loads(str(z["metadata"]))
-        if set(meta) != {"schema", "radar"} or meta["schema"] != 1:
+        if not isinstance(meta, dict) or set(meta) != {"schema", "radar"} or meta["schema"] != 1:
             raise ValueError("unsupported IQ record schema")
         return IQRecord(z["time_s"], z["iq"], Radar(**meta["radar"]), z["valid"])
 
