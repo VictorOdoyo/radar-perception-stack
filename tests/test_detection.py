@@ -32,3 +32,10 @@ def test_nms_keeps_strongest_cell_within_declared_guard():
     p[15, 15] = 4
     a = m.suppress(p, p > 0)
     assert a.tolist() == [[10, 10], [15, 15]]
+
+
+def test_os_multiplier_matches_independent_product_tail():
+    n = 40
+    k = 30
+    a = m.os_multiplier(n, k, 1e-4)
+    assert np.prod(np.arange(n - k + 1, n + 1) / (np.arange(n - k + 1, n + 1) + a)) == pytest.approx(1e-4)

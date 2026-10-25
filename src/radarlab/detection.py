@@ -71,3 +71,23 @@ def suppress(power, detections, radius=(2, 2), maximum=100):
         if len(selected) >= maximum:
             break
     return np.asarray(selected, dtype=int).reshape(-1, 2)
+
+
+def os_multiplier(training_cells, rank, false_alarm=1e-4):
+    from scipy.optimize import brentq
+
+    from .core import integer
+
+    n = integer(training_cells)
+    k = integer(rank)
+    if k > n or not 0 < false_alarm < 1:
+        raise ValueError("valid OS rank and false alarm required")
+    rates = np.arange(n - k + 1, n + 1, dtype=float)
+
+    def residual(alpha):
+        return float(np.sum(np.log(rates / (rates + alpha))) - np.log(false_alarm))
+
+    high = 1.0
+    while residual(high) > 0:
+        high *= 2
+    return brentq(residual, 0, high)
