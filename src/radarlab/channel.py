@@ -37,3 +37,17 @@ def synthesize(targets, model=None, noise_power=1.0, seed=42, allow_alias=False)
         data += target_cube(target, p, allow_alias)
     rng = stream(seed, "receiver-thermal-noise")
     return data + np.sqrt(power / 2) * (rng.normal(size=data.shape) + 1j * rng.normal(size=data.shape))
+
+
+def received_power(range_m, rcs_m2, transmit_w, gain_linear, wavelength_m, loss_linear=1):
+    from .core import positive
+
+    r = positive(range_m)
+    sigma = positive(rcs_m2, allow_zero=True)
+    pt = positive(transmit_w)
+    gain = positive(gain_linear)
+    wavelength = positive(wavelength_m)
+    loss = positive(loss_linear)
+    if loss < 1:
+        raise ValueError("passive loss factor must be at least one")
+    return pt * gain**2 * wavelength**2 * sigma / ((4 * np.pi) ** 3 * r**4 * loss)

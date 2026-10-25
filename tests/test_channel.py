@@ -24,3 +24,8 @@ def test_circular_receiver_noise_matches_declared_total_power():
     assert np.mean(abs(a) ** 2) == pytest.approx(2, rel=0.02)
     assert np.mean(a.real * a.imag) == pytest.approx(0, abs=0.02)
     assert np.array_equal(a, m.synthesize([], noise_power=2))
+
+
+def test_monostatic_received_power_obeys_fourth_power_range_loss():
+    a = m.received_power(10, 1, 1, 10, 0.004)
+    assert m.received_power(20, 1, 1, 10, 0.004) == pytest.approx(a / 16)
