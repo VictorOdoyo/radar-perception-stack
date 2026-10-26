@@ -163,3 +163,14 @@ def intersection(mean_a, cov_a, mean_b, cov_b, weight=0.5):
     ib = np.linalg.inv(covariance(cov_b, len(a)))
     p = np.linalg.inv(w * ia + (1 - w) * ib)
     return {"mean": p @ (w * ia @ a + (1 - w) * ib @ b), "covariance": p, "weight": w}
+
+
+def optimize_intersection(mean_a, cov_a, mean_b, cov_b):
+    from scipy.optimize import minimize_scalar
+
+    def objective(w):
+        return float(np.linalg.slogdet(intersection(mean_a, cov_a, mean_b, cov_b, w)["covariance"])[1])
+
+    solved = minimize_scalar(objective, bounds=(0, 1), method="bounded", options={"xatol": 1e-10})
+    weight = min([0.0, 1.0, float(solved.x)], key=objective)
+    return intersection(mean_a, cov_a, mean_b, cov_b, weight)

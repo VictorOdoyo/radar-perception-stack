@@ -86,3 +86,9 @@ def test_ci_identical_information_not_counted_twice():
     r = m.intersection([1, 2], np.eye(2), [1, 2], np.eye(2))
     assert np.allclose(r["covariance"], np.eye(2))
     assert np.allclose(r["mean"], [1, 2])
+
+
+def test_ci_complementary_information():
+    r = m.optimize_intersection([0, 0], np.diag([1, 9]), [0, 0], np.diag([9, 1]))
+    assert r["weight"] == pytest.approx(0.5, abs=1e-5)
+    assert np.linalg.det(r["covariance"]) < 9
