@@ -72,3 +72,30 @@ def position_information(position, anchors, range_std_m=0.3, bearing_std_rad=0.0
         _, h = polar_observation(position, anchor)
         information += h.T @ np.diag([1 / sr**2, 1 / sa**2]) @ h
     return {"information": information, "covariance_bound": np.linalg.inv(covariance(information, 2))}
+
+
+def localize_ranges(anchors, ranges_m, standard_deviation_m, initial_position):
+    from scipy.optimize import least_squares
+
+    a = finite(anchors, real=True, ndim=2)
+    r = finite(ranges_m, real=True, ndim=1)
+    s = np.broadcast_to(finite(standard_deviation_m, real=True), r.shape)
+    initial = finite(initial_position, real=True)
+    if a.shape != (len(r), 2) or len(r) < 3 or initial.shape != (2,) or np.any(r <= 0) or np.any(s <= 0):
+        raise ValueError("three aligned physical range observations required")
+
+    def residual(x):
+        return (np.linalg.norm(x - a, axis=1) - r) / s
+
+    def jac(x):
+        delta = x - a
+        distance = np.linalg.norm(delta, axis=1)
+        if min(distance) < 1e-8:
+            raise ValueError("trial target coincides with radar")
+        return delta / distance[:, None] / s[:, None]
+
+    solved = least_squares(residual, initial, jac=jac, xtol=1e-12, gtol=1e-12, ftol=1e-12)
+    information = solved.jac.T @ solved.jac
+    if not solved.success or np.linalg.cond(information) > 1e10:
+        raise ValueError("range geometry is unobservable or solve failed")
+    return {"position": solved.x, "covariance": np.linalg.inv(information), "weighted_residual": solved.fun}

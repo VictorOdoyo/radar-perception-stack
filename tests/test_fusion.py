@@ -50,3 +50,11 @@ def test_information_adds():
     one = m.position_information([10, 50], [[0, 0]])["covariance_bound"]
     two = m.position_information([10, 50], [[0, 0], [0, 0]])["covariance_bound"]
     assert np.allclose(two, one / 2)
+
+
+def test_three_range_localization():
+    a = np.array([[0, 0], [40, 0], [0, 40]])
+    truth = np.array([12.0, 18.0])
+    r = np.linalg.norm(truth - a, axis=1)
+    fit = m.localize_ranges(a, r, 0.1, [10, 20])
+    assert np.allclose(fit["position"], truth, atol=1e-8)
