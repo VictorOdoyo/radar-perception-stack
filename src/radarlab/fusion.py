@@ -193,3 +193,31 @@ def whiten(residual, covariance_value):
     e = finite(residual, real=True, ndim=1)
     p = covariance(covariance_value, len(e))
     return solve_triangular(np.linalg.cholesky(p), e, lower=True)
+
+
+def robust_ranges(anchors, ranges_m, std_m, initial_position, transition_sigma=1.5):
+    from scipy.optimize import least_squares
+
+    a = finite(anchors, real=True, ndim=2)
+    r = finite(ranges_m, real=True, ndim=1)
+    s = positive(std_m)
+    scale = positive(transition_sigma)
+    initial = finite(initial_position, real=True)
+    if a.shape != (len(r), 2) or len(r) < 4 or initial.shape != (2,) or np.any(r <= 0):
+        raise ValueError("four aligned ranges and initial position required")
+    result = least_squares(
+        lambda x: (np.linalg.norm(x - a, axis=1) - r) / s,
+        initial,
+        loss="huber",
+        f_scale=scale,
+        gtol=1e-12,
+        xtol=1e-12,
+        ftol=1e-12,
+    )
+    if not result.success:
+        raise RuntimeError(result.message)
+    return {
+        "position": result.x,
+        "weighted_residual": (np.linalg.norm(result.x - a, axis=1) - r) / s,
+        "robust_cost": float(result.cost),
+    }

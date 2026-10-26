@@ -104,3 +104,13 @@ def test_whitened_energy_equals_mahalanobis():
     p = np.array([[2.0, 0.5], [0.5, 1]])
     w = m.whiten(e, p)
     assert w @ w == pytest.approx(e @ np.linalg.solve(p, e))
+
+
+def test_robust_range_outlier():
+    a = np.array([[-20.0, 0], [20, 0], [0, -20], [0, 20], [-20, 20], [20, 20]])
+    truth = np.array([3.0, 5.0])
+    r = np.linalg.norm(truth - a, axis=1)
+    r[0] += 10
+    ordinary = m.localize_ranges(a, r, 0.1, [1, 3])
+    robust = m.robust_ranges(a, r, 0.1, [1, 3])
+    assert np.linalg.norm(robust["position"] - truth) < np.linalg.norm(ordinary["position"] - truth) / 5
