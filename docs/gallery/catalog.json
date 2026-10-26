@@ -11,7 +11,7 @@
       "provenance": {
         "configuration_sha256": "f5d659ccea1b91e2eee88f2fc775f913457b5a49b2f5dfbcde137e665361e20b",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -39,7 +39,7 @@
       "provenance": {
         "configuration_sha256": "d8517b8cebc9045102ad46673f09b4dda33578752f7e2f68c7216db352ce2374",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -67,7 +67,7 @@
       "provenance": {
         "configuration_sha256": "55dbd6f1a31ae4aab770b7881bbdfde6aad3c33f6f554853aa26ee46587ed2ed",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -95,7 +95,7 @@
       "provenance": {
         "configuration_sha256": "9a99fde1ecdfe05b2806efcf0ababfe2ad1a8d6e6845bcc761ceddafce6ca7a8",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -123,7 +123,7 @@
       "provenance": {
         "configuration_sha256": "5a39646322bef934fed44212d1c04da319c8e76baf2477d62990597f8d38ae13",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -151,7 +151,7 @@
       "provenance": {
         "configuration_sha256": "4cffee23614679e784841c317cad8f1c4f13ece2dafd5f1dd0df66aa0f1cd04b",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -179,7 +179,7 @@
       "provenance": {
         "configuration_sha256": "cd9e5df93b44f424d7dddae35b520c29ca91dd7d804f250a31af8f3c9953f006",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -207,7 +207,7 @@
       "provenance": {
         "configuration_sha256": "e01a4e96512378ea9ae3d28bef4283379a359bcf15ceb23c7cd82ba1934d6b5a",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -235,7 +235,7 @@
       "provenance": {
         "configuration_sha256": "c1c4918c04a7d7f27cd3dd57249f4eb2f5d71455e7832efe7b453f0cdd530f9a",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -263,7 +263,7 @@
       "provenance": {
         "configuration_sha256": "8e529ca4e5d515cd641a374478aeb964c6386898272e611cdb5b55c090817554",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -291,7 +291,7 @@
       "provenance": {
         "configuration_sha256": "d0091636d9b572f1ee5d1c5731f14aaef27848bd5c0184bdbe0ec0f536cd7beb",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -319,7 +319,7 @@
       "provenance": {
         "configuration_sha256": "395e7197ac7230a3633d30fc60c09efdbde62c6b638f3f600b9530b64c856160",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -347,7 +347,7 @@
       "provenance": {
         "configuration_sha256": "8840ae064b442b3a14da1c8fb5eab14bac16c063ce6fc4b83c056240f5e36a22",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -375,7 +375,7 @@
       "provenance": {
         "configuration_sha256": "13acbb52b0a2f218f2915ddb03a14f970ceb50782596c29634bcee0fb09a65cc",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -403,7 +403,7 @@
       "provenance": {
         "configuration_sha256": "020f8aa18d1f00086528db6bfce00612c4927ca446e3dcfaf2cc2d9a08848ae0",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -431,7 +431,7 @@
       "provenance": {
         "configuration_sha256": "d5e7b537b180edfc54ec1650a78409528fc05053ab24859567aabab321d16414",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -459,7 +459,7 @@
       "provenance": {
         "configuration_sha256": "e4a465dcd33065baa67f96dbb8110094ec28affe612deb893edff5ac303aedad",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -483,7 +483,7 @@
       "provenance": {
         "configuration_sha256": "a44871e21e596f7e3dfff9c7bea0a6979818a33984f9295a1868255902d4c791",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -508,7 +508,7 @@
       "provenance": {
         "configuration_sha256": "1ea353a4816014c71e9c505b3ebe5a9b89c7239475add353aa5ce2b26b0d150f",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -533,7 +533,7 @@
       "provenance": {
         "configuration_sha256": "e29f5e4c7e0b6786079c60ef2f0d985ebb40508a945d7b364e30946bbd8b3ec9",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -557,7 +557,7 @@
       "provenance": {
         "configuration_sha256": "a442241c40d0c9a42287b4ef76b9f342ea57631a00f280fe9155632a18874fc5",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -582,7 +582,7 @@
       "provenance": {
         "configuration_sha256": "b4e93ce56ab181b6e416934ee7780f2c7a6f1f42c79d7b513f27fd37c12cc98e",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -606,7 +606,7 @@
       "provenance": {
         "configuration_sha256": "f44dfddda99101c48094c1992d309cf0e2e71b2169851d28e174ae80820ca49e",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -630,7 +630,7 @@
       "provenance": {
         "configuration_sha256": "feb4b71372787c6480227948245deb65403365e5b38839edec45c424fe417b12",
         "git_dirty": false,
-        "git_revision": "df371aecc0a1f6b651ef08fc93e7ab3fd8cf11da",
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
         "matplotlib": "3.11.2",
         "numpy": "2.5.4",
         "package_version": "0.1.0",
@@ -642,6 +642,254 @@
       "summary": {
         "maximum_calibrated_error_deg": 7.105427357601002e-15,
         "maximum_uncalibrated_error_deg": 1.9163473928289747
+      }
+    },
+    {
+      "archive": "correlated-track-fusion/fields.npz",
+      "case": "correlated-track-fusion",
+      "configuration": {
+        "case": "correlated-track-fusion",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "279c4cc2ef77520a4499d6624256fb5d46abaffbf8415d4889d5bc5a173b2e28",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "f4a2e4975f9cb509e09f4703f632aa0f72b920db3b44ca3587713ad5b5056cdf",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "ci_nees_high_correlation": 1.9903703926227936,
+        "known_nees_high_correlation": 2.041405530895173,
+        "naive_nees_high_correlation": 3.980740785245587
+      }
+    },
+    {
+      "archive": "intersection-weight-design/fields.npz",
+      "case": "intersection-weight-design",
+      "configuration": {
+        "case": "intersection-weight-design",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "22681cda7e58f0529983ad4a57a271b5f884d2b27f240379ab6f4ac855a02c1e",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "2f1665016ccecb0f4d2a61476b386c286702ecdc74d32f98d9a665b8c5df9b54",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "optimal_weight": 0.4999999999999998
+      }
+    },
+    {
+      "archive": "radar-baseline-information/fields.npz",
+      "case": "radar-baseline-information",
+      "configuration": {
+        "case": "radar-baseline-information",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "1681a477f6ab571fa457a771f571454c4aa7bc512ad89294d33447bf63448269",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "56b4602a90ae53ba78d08dfd637742ccd55439ed0209389db4970cf0d8d4a91b",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "wide_baseline_lateral_std_m": 0.38789459953206057,
+        "zero_baseline_lateral_std_m": 1.131370849898476
+      }
+    },
+    {
+      "archive": "range-only-localization/fields.npz",
+      "case": "range-only-localization",
+      "configuration": {
+        "case": "range-only-localization",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "1adabd41f7c12099031fbebf7187ec936b15e340ce8827c6e5a9251e9d463828",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "b12031cf21fa04191d9805ad81ebde229ef4f3cbe5006cbbb61d4ddbefffd061",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "mean_nees": 1.9667533470620093,
+        "position_rmse_m": 0.30028736588792637
+      }
+    },
+    {
+      "archive": "multi-radar-doppler-velocity/fields.npz",
+      "case": "multi-radar-doppler-velocity",
+      "configuration": {
+        "case": "multi-radar-doppler-velocity",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "c22a2431dabeadbc34071b36830a3358ad10f403175d52846e4b5d5a034bc276",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "ea64e006bbc2a87dcd02556864c3852da2a5df3b74cb0fafa9bf8045d17b43c4",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "velocity_rmse_m_s": 0.24991307754511244
+      }
+    },
+    {
+      "archive": "mounting-uncertainty/fields.npz",
+      "case": "mounting-uncertainty",
+      "configuration": {
+        "case": "mounting-uncertainty",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "3e1eff943adc7f714a3ec72dfbb5376414f6a22e7d9a25293255905d66b2b04b",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "5d03fc97117e8ec0fd7ce6af2ed87ee273bf00dba216a1669537d18a287fd55d",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "lateral_std_at_200m": 0.6999199037452313
+      }
+    },
+    {
+      "archive": "asynchronous-track-alignment/fields.npz",
+      "case": "asynchronous-track-alignment",
+      "configuration": {
+        "case": "asynchronous-track-alignment",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "296b4f1bd3725c5f21516a258ce8ae607693e05f109eaaacb5baf2858d2d1831",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "06200dc0f048127b4738ddd730e6399dbd526e66f1f0f982840b16e56df31b71",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "maximum_aligned_bias_m": 1.1234667099445444e-14,
+        "maximum_stale_bias_m": 3.605551275463989
+      }
+    },
+    {
+      "archive": "innovation-whitening/fields.npz",
+      "case": "innovation-whitening",
+      "configuration": {
+        "case": "innovation-whitening",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "31f63add6ad00569f5b47da62ffd70b1354e5498ed78b51ec3ae7d0bf1623e6a",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "0366ab22f3a5629e8ac1a42407e72833d468a1fa3ad15ce6103ac6ddeeca22f2",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "mean_whitened_energy": 2.0584962495771606,
+        "raw_correlation": 0.7920470544576549,
+        "whitened_correlation": -0.025619120997530706
+      }
+    },
+    {
+      "archive": "common-range-bias/fields.npz",
+      "case": "common-range-bias",
+      "configuration": {
+        "case": "common-range-bias",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "5094fbd5686ca8a85ea39d57abd33f80eb2a518b63f96f75f734f8c704b8e15d",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "f222e8f93a376dcf33b9e17cb06c43c0acf909c8e7e3298bcd4c224016c59be3",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "bias_at_3m_m": 0.7904324670521852
+      }
+    },
+    {
+      "archive": "robust-range-localization/fields.npz",
+      "case": "robust-range-localization",
+      "configuration": {
+        "case": "robust-range-localization",
+        "resolution_scale": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "configuration_sha256": "6d491715e5a53916ef66b75139dc22a6dbfd832b2a38d9764bacd300ddb443b8",
+        "git_dirty": false,
+        "git_revision": "86f05ddc4ec5c2cb010601136913b19da53d1643",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.4",
+        "package_version": "0.1.0",
+        "parameters_sha256": "8c21a54ad6bc6bc568ac2da5ea7267c4925270c207a7c6d6b714340d5665e92b",
+        "python": "3.13.15",
+        "quantity_convention": "SI units; complex transmit-conjugate dechirped IQ; positive receding radial velocity; y forward x lateral",
+        "scipy": "1.18.1"
+      },
+      "summary": {
+        "ordinary_error_m": 3.874477709517373,
+        "robust_error_m": 0.07076145402370573
       }
     }
   ],
