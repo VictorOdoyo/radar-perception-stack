@@ -74,3 +74,9 @@ def test_independent_fusion():
     r = m.independent([0, 0], np.eye(2), [2, 2], np.eye(2))
     assert np.allclose(r["mean"], [1, 1])
     assert np.allclose(r["covariance"], np.eye(2) / 2)
+
+
+def test_known_correlation():
+    r = m.correlated([0, 0], np.eye(2), [2, 2], np.eye(2), 0.8 * np.eye(2))
+    assert np.allclose(r["mean"], [1, 1])
+    assert np.allclose(r["covariance"], 0.9 * np.eye(2))

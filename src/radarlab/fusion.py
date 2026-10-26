@@ -133,3 +133,21 @@ def independent(mean_a, cov_a, mean_b, cov_b):
     ib = np.linalg.inv(pb)
     p = np.linalg.inv(ia + ib)
     return {"mean": p @ (ia @ a + ib @ b), "covariance": p}
+
+
+def correlated(mean_a, cov_a, mean_b, cov_b, cross_covariance):
+    a = finite(mean_a, real=True, ndim=1)
+    b = finite(mean_b, real=True, ndim=1)
+    n = len(a)
+    if b.shape != a.shape:
+        raise ValueError("aligned correlated estimates required")
+    cross = finite(cross_covariance, real=True)
+    pa = covariance(cov_a, n)
+    pb = covariance(cov_b, n)
+    if cross.shape != (n, n):
+        raise ValueError("aligned cross covariance required")
+    joint = covariance(np.block([[pa, cross], [cross.T, pb]]), 2 * n)
+    h = np.vstack([np.eye(n), np.eye(n)])
+    solve = np.linalg.solve(joint, h)
+    p = np.linalg.inv(h.T @ solve)
+    return {"mean": p @ solve.T @ np.r_[a, b], "covariance": p}
