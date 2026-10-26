@@ -20,3 +20,7 @@ def test_ranges():
     s = m.ranges()["summary"]
     assert s["position_rmse_m"] < 0.5
     assert 1.3 < s["mean_nees"] < 2.8
+
+
+def test_velocity():
+    assert m.velocity()["summary"]["velocity_rmse_m_s"] < 0.4

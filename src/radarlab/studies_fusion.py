@@ -167,3 +167,42 @@ def ranges(scale=1, seed=42):
             ),
         ],
     )
+
+
+def velocity(scale=1, seed=42):
+    from .core import stream
+    from .fusion import velocity_from_doppler
+
+    a = np.array([[-20.0, 0], [20, 0], [0, 50]])
+    position = np.array([5.0, 20.0])
+    truth = np.array([3.0, -2.0])
+    direction = position - a
+    direction /= np.linalg.norm(direction, axis=1)[:, None]
+    rng = stream(seed, "velocity")
+    errors = []
+    for _ in range(500 * scale):
+        fit = velocity_from_doppler(position, a, direction @ truth + rng.normal(0, 0.2, 3))
+        errors.append(fit["velocity"] - truth)
+    errors = np.array(errors)
+    return make(
+        "multi-radar-doppler-velocity",
+        {"known_position_m": position.tolist(), "doppler_std_m_s": 0.2},
+        {"velocity_rmse_m_s": float(np.sqrt(np.mean(np.sum(errors**2, axis=1))))},
+        {
+            "trial": np.arange(len(errors)),
+            "lateral_error_m_s": errors[:, 0],
+            "forward_error_m_s": errors[:, 1],
+        },
+        [
+            curve(
+                "Independent multi-view velocity errors",
+                "trial",
+                [("lateral_error_m_s", "Lateral"), ("forward_error_m_s", "Forward")],
+                "Trial",
+                "Velocity error (m/s)",
+            )
+        ],
+        assumptions=[
+            "Target position and static sensor poses are treated as known; their uncertainty is not silently included in conditional Doppler covariance."
+        ],
+    )
