@@ -35,3 +35,14 @@ def mounting_covariance(local_mean, pose_covariance, yaw_rad=0):
     pose = covariance(pose_covariance, 3)
     jac = np.array([[1, 0, -x[1]], [0, 1, x[0]], [0, 0, -x[3]], [0, 0, x[2]]])
     return jac @ pose @ jac.T
+
+
+def align(mean, covariance_value, source_time_s, target_time_s, process_density=1):
+    from .tracking import predict
+
+    start, stop = finite([source_time_s, target_time_s], real=True)
+    if stop < start:
+        raise ValueError("fusion cannot propagate a track backward using this predictor")
+    if stop == start:
+        return finite(mean, real=True).copy(), covariance(covariance_value, 4).copy()
+    return predict(mean, covariance_value, stop - start, process_density)

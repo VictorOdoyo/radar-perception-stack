@@ -21,3 +21,11 @@ def test_mount_yaw_range_scaling():
     b = m.mounting_covariance([0, 100, 1, 0], np.diag([0.01, 0.01, 0.001]))
     assert b[0, 0] > a[0, 0] * 50
     assert a[0, 3] != 0
+
+
+def test_alignment_clock():
+    x, p = m.align([0, 0, 2, 3], np.eye(4), 1, 3, 0)
+    assert np.allclose(x, [4, 6, 2, 3])
+    assert p[0, 0] == pytest.approx(5)
+    with pytest.raises(ValueError):
+        m.align(x, p, 3, 1)
