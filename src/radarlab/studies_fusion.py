@@ -90,3 +90,33 @@ def weights(scale=1, seed=42):
             ),
         ],
     )
+
+
+def baseline(scale=1, seed=42):
+    from .fusion import position_information
+
+    baseline = np.linspace(0, 100, 101 * scale)
+    lateral = []
+    forward = []
+    for width in baseline:
+        p = position_information([0, 80], [[-width / 2, 0], [width / 2, 0]])["covariance_bound"]
+        lateral.append(np.sqrt(p[0, 0]))
+        forward.append(np.sqrt(p[1, 1]))
+    return make(
+        "radar-baseline-information",
+        {"nominal_target_m": [0, 80], "range_std_m": 0.3, "bearing_std_rad": 0.02},
+        {"zero_baseline_lateral_std_m": lateral[0], "wide_baseline_lateral_std_m": lateral[-1]},
+        {"baseline_m": baseline, "lateral_std_m": np.array(lateral), "forward_std_m": np.array(forward)},
+        [
+            curve(
+                "Local independent-measurement information bound",
+                "baseline_m",
+                [("lateral_std_m", "Lateral"), ("forward_std_m", "Forward")],
+                "Radar baseline (m)",
+                "Position standard-deviation bound (m)",
+            )
+        ],
+        assumptions=[
+            "Local Fisher bound at the declared nominal target; correct calibration and independent Gaussian range/bearing errors."
+        ],
+    )

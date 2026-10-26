@@ -9,3 +9,8 @@ def test_correlation():
 
 def test_weights():
     assert abs(m.weights()["summary"]["optimal_weight"] - 0.5) < 1e-4
+
+
+def test_baseline():
+    s = m.baseline()["summary"]
+    assert s["wide_baseline_lateral_std_m"] < s["zero_baseline_lateral_std_m"]
