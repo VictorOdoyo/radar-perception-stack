@@ -28,3 +28,10 @@ def transform_track(mean, covariance_value, translation=(0, 0), yaw_rad=0):
     y = f @ x
     y[:2] += offset
     return y, f @ p @ f.T
+
+
+def mounting_covariance(local_mean, pose_covariance, yaw_rad=0):
+    x, _ = transform_track(local_mean, np.eye(4), yaw_rad=yaw_rad)
+    pose = covariance(pose_covariance, 3)
+    jac = np.array([[1, 0, -x[1]], [0, 1, x[0]], [0, 0, -x[3]], [0, 0, x[2]]])
+    return jac @ pose @ jac.T
