@@ -206,3 +206,31 @@ def velocity(scale=1, seed=42):
             "Target position and static sensor poses are treated as known; their uncertainty is not silently included in conditional Doppler covariance."
         ],
     )
+
+
+def mounting(scale=1, seed=42):
+    from .fusion import mounting_covariance
+
+    distance = np.linspace(1, 200, 101 * scale)
+    std = []
+    for d in distance:
+        std.append(
+            np.sqrt(
+                mounting_covariance([0, d, 1, 0], np.diag([0.05**2, 0.05**2, np.deg2rad(0.2) ** 2]))[0, 0]
+            )
+        )
+    return make(
+        "mounting-uncertainty",
+        {"translation_std_m": 0.05, "yaw_std_deg": 0.2},
+        {"lateral_std_at_200m": std[-1]},
+        {"range_m": distance, "lateral_std_m": np.array(std)},
+        [
+            curve(
+                "Sensor-pose uncertainty contribution",
+                "range_m",
+                [("lateral_std_m", "Yaw and translation")],
+                "Target distance (m)",
+                "Lateral standard deviation (m)",
+            )
+        ],
+    )

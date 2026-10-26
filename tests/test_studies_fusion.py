@@ -24,3 +24,7 @@ def test_ranges():
 
 def test_velocity():
     assert m.velocity()["summary"]["velocity_rmse_m_s"] < 0.4
+
+
+def test_mounting():
+    assert m.mounting()["summary"]["lateral_std_at_200m"] > 0.6
