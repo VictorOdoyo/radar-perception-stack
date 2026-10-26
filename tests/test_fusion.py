@@ -97,3 +97,10 @@ def test_ci_complementary_information():
 def test_consistency_interval():
     lo, hi = m.consistency_bounds(4, 1000)
     assert lo < 4 < hi and hi - lo < 1
+
+
+def test_whitened_energy_equals_mahalanobis():
+    e = np.array([2.0, -1])
+    p = np.array([[2.0, 0.5], [0.5, 1]])
+    w = m.whiten(e, p)
+    assert w @ w == pytest.approx(e @ np.linalg.solve(p, e))

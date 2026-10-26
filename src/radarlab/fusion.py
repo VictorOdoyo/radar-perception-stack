@@ -185,3 +185,11 @@ def consistency_bounds(dimension, trials, confidence=0.95):
         raise ValueError("confidence in (0,1) required")
     tail = (1 - confidence) / 2
     return tuple(float(v / trials) for v in chi2.ppf([tail, 1 - tail], dimension * trials))
+
+
+def whiten(residual, covariance_value):
+    from scipy.linalg import solve_triangular
+
+    e = finite(residual, real=True, ndim=1)
+    p = covariance(covariance_value, len(e))
+    return solve_triangular(np.linalg.cholesky(p), e, lower=True)
