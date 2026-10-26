@@ -44,3 +44,9 @@ def test_polar_jacobian_difference():
     )
     assert np.allclose(h, numeric, atol=1e-8)
     assert z[1] == pytest.approx(np.arctan2(12, 45))
+
+
+def test_information_adds():
+    one = m.position_information([10, 50], [[0, 0]])["covariance_bound"]
+    two = m.position_information([10, 50], [[0, 0], [0, 0]])["covariance_bound"]
+    assert np.allclose(two, one / 2)

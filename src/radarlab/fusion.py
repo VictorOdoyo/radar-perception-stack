@@ -1,6 +1,6 @@
 import numpy as np
 
-from .core import finite
+from .core import finite, positive
 
 
 def covariance(value, dimension=None):
@@ -59,3 +59,16 @@ def polar_observation(position, anchor=(0, 0)):
         raise ValueError("bearing unobservable at the sensor origin")
     x, y = delta
     return np.array([r, np.arctan2(x, y)]), np.array([[x / r, y / r], [y / r**2, -x / r**2]])
+
+
+def position_information(position, anchors, range_std_m=0.3, bearing_std_rad=0.02):
+    sensors = finite(anchors, real=True, ndim=2)
+    sr = positive(range_std_m)
+    sa = positive(bearing_std_rad)
+    if sensors.shape[1] != 2 or not len(sensors):
+        raise ValueError("one or more planar radar anchors required")
+    information = np.zeros((2, 2))
+    for anchor in sensors:
+        _, h = polar_observation(position, anchor)
+        information += h.T @ np.diag([1 / sr**2, 1 / sa**2]) @ h
+    return {"information": information, "covariance_bound": np.linalg.inv(covariance(information, 2))}
