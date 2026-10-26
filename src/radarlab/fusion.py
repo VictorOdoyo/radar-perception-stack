@@ -120,3 +120,16 @@ def velocity_from_doppler(position, anchors, receding_m_s, standard_deviation_m_
     cov = np.linalg.inv(information)
     mean = cov @ weighted.T @ (v / s)
     return {"velocity": mean, "covariance": cov}
+
+
+def independent(mean_a, cov_a, mean_b, cov_b):
+    a = finite(mean_a, real=True, ndim=1)
+    b = finite(mean_b, real=True, ndim=1)
+    if a.shape != b.shape:
+        raise ValueError("matching estimate dimensions required")
+    pa = covariance(cov_a, len(a))
+    pb = covariance(cov_b, len(a))
+    ia = np.linalg.inv(pa)
+    ib = np.linalg.inv(pb)
+    p = np.linalg.inv(ia + ib)
+    return {"mean": p @ (ia @ a + ib @ b), "covariance": p}

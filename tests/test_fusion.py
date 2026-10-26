@@ -68,3 +68,9 @@ def test_multi_view_velocity():
     h /= np.linalg.norm(h, axis=1)[:, None]
     fit = m.velocity_from_doppler(p, anchors, h @ truth)
     assert np.allclose(fit["velocity"], truth)
+
+
+def test_independent_fusion():
+    r = m.independent([0, 0], np.eye(2), [2, 2], np.eye(2))
+    assert np.allclose(r["mean"], [1, 1])
+    assert np.allclose(r["covariance"], np.eye(2) / 2)
