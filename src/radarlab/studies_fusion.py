@@ -318,3 +318,43 @@ def innovations(scale=1, seed=42):
             ),
         ],
     )
+
+
+def bias(scale=1, seed=42):
+    from .fusion import localize_ranges
+
+    a = np.array([[-30.0, 0], [30, 0], [0, 60], [50, 50]])
+    truth = np.array([8.0, 25.0])
+    offset = np.linspace(0, 3, 61 * scale)
+    errors = []
+    residuals = []
+    for value in offset:
+        fit = localize_ranges(a, np.linalg.norm(truth - a, axis=1) + value, 0.3, [0, 20])
+        errors.append(np.linalg.norm(fit["position"] - truth))
+        residuals.append(np.linalg.norm(fit["weighted_residual"]))
+    return make(
+        "common-range-bias",
+        {"range_std_m": 0.3, "anchors_m": a.tolist()},
+        {"bias_at_3m_m": errors[-1]},
+        {
+            "common_range_offset_m": offset,
+            "position_error_m": np.array(errors),
+            "weighted_residual_norm": np.array(residuals),
+        },
+        [
+            curve(
+                "Unmodeled common range offset",
+                "common_range_offset_m",
+                [("position_error_m", "Position bias")],
+                "Common range bias (m)",
+                "Position error (m)",
+            ),
+            curve(
+                "Fit inconsistency",
+                "common_range_offset_m",
+                [("weighted_residual_norm", "Weighted residual norm")],
+                "Common range bias (m)",
+                "Normalized residual norm",
+            ),
+        ],
+    )

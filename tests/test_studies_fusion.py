@@ -40,3 +40,7 @@ def test_innovations():
     s = m.innovations()["summary"]
     assert s["raw_correlation"] > 0.7
     assert abs(s["whitened_correlation"]) < 0.08
+
+
+def test_bias():
+    assert m.bias()["summary"]["bias_at_3m_m"] > 0.5
