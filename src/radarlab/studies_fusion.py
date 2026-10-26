@@ -120,3 +120,50 @@ def baseline(scale=1, seed=42):
             "Local Fisher bound at the declared nominal target; correct calibration and independent Gaussian range/bearing errors."
         ],
     )
+
+
+def ranges(scale=1, seed=42):
+    from .core import stream
+    from .fusion import localize_ranges
+
+    anchors = np.array([[-30.0, 0], [30, 0], [0, 60], [50, 50]])
+    truth = np.array([8.0, 25.0])
+    rng = stream(seed, "range-mc")
+    n = 200 * scale
+    errors = []
+    nees = []
+    for _ in range(n):
+        observed = np.linalg.norm(truth - anchors, axis=1) + rng.normal(0, 0.3, len(anchors))
+        fit = localize_ranges(anchors, observed, 0.3, [0, 20])
+        error = fit["position"] - truth
+        errors.append(error)
+        nees.append(error @ np.linalg.solve(fit["covariance"], error))
+    error = np.array(errors)
+    plot = curve(
+        "Independent range-only localization trials",
+        "error_x_m",
+        [("error_y_m", "Position error")],
+        "Lateral error (m)",
+        "Forward error (m)",
+        style=".",
+    )
+    plot["aspect"] = "equal"
+    return make(
+        "range-only-localization",
+        {"trials": n, "anchors_m": anchors.tolist(), "range_std_m": 0.3},
+        {
+            "position_rmse_m": float(np.sqrt(np.mean(np.sum(error**2, axis=1)))),
+            "mean_nees": float(np.mean(nees)),
+        },
+        {"error_x_m": error[:, 0], "error_y_m": error[:, 1], "trial": np.arange(n), "nees": np.array(nees)},
+        [
+            plot,
+            curve(
+                "Trial consistency",
+                "trial",
+                [("nees", "NEES")],
+                "Independent trial",
+                "Squared normalized error",
+            ),
+        ],
+    )

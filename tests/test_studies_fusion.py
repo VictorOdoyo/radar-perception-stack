@@ -14,3 +14,9 @@ def test_weights():
 def test_baseline():
     s = m.baseline()["summary"]
     assert s["wide_baseline_lateral_std_m"] < s["zero_baseline_lateral_std_m"]
+
+
+def test_ranges():
+    s = m.ranges()["summary"]
+    assert s["position_rmse_m"] < 0.5
+    assert 1.3 < s["mean_nees"] < 2.8
