@@ -33,6 +33,56 @@ CASES = {
         "calibration_recovery",
         "Known-reference calibration recovery",
     ],
+    "correlated-track-fusion": [
+        "studies_fusion",
+        "correlation",
+        "Measure track-fusion consistency as common sensor error increases",
+    ],
+    "intersection-weight-design": [
+        "studies_fusion",
+        "weights",
+        "Optimize covariance-intersection tradeoffs for complementary sensor viewing directions",
+    ],
+    "radar-baseline-information": [
+        "studies_fusion",
+        "baseline",
+        "Quantify two-radar localization information as installation baseline changes",
+    ],
+    "range-only-localization": [
+        "studies_fusion",
+        "ranges",
+        "Compare nonlinear multi-radar range localization errors against local covariance predictions",
+    ],
+    "multi-radar-doppler-velocity": [
+        "studies_fusion",
+        "velocity",
+        "Recover both velocity components from noisy multi-view Doppler projections",
+    ],
+    "mounting-uncertainty": [
+        "studies_fusion",
+        "mounting",
+        "Propagate yaw mounting uncertainty into range-dependent position and velocity covariance",
+    ],
+    "asynchronous-track-alignment": [
+        "studies_fusion",
+        "alignment",
+        "Demonstrate stale-track fusion bias and causal timestamp alignment",
+    ],
+    "innovation-whitening": [
+        "studies_fusion",
+        "innovations",
+        "Whiten correlated radar innovations and verify their normalized energy",
+    ],
+    "common-range-bias": [
+        "studies_fusion",
+        "bias",
+        "Retain localization bias when all radar ranges share an unmodeled timing offset",
+    ],
+    "robust-range-localization": [
+        "studies_fusion",
+        "robust",
+        "Compare robust and Gaussian localization under one contaminated radar range",
+    ],
 }
 
 
