@@ -28,3 +28,9 @@ def test_velocity():
 
 def test_mounting():
     assert m.mounting()["summary"]["lateral_std_at_200m"] > 0.6
+
+
+def test_alignment():
+    s = m.alignment()["summary"]
+    assert s["maximum_stale_bias_m"] > 3
+    assert s["maximum_aligned_bias_m"] < 1e-10

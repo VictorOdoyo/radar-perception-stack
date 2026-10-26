@@ -234,3 +234,50 @@ def mounting(scale=1, seed=42):
             )
         ],
     )
+
+
+def alignment(scale=1, seed=42):
+    from .fusion import align, independent
+
+    lag = np.linspace(0, 2, 101 * scale)
+    velocity = np.array([2.0, 3.0])
+    stale = []
+    aligned = []
+    uncertainty = []
+    current = np.r_[np.array([10.0, 30.0]), velocity]
+    for dt in lag:
+        old = current.copy()
+        old[:2] -= velocity * dt
+        bad = independent(old, np.eye(4), current, np.eye(4))
+        advanced, p = align(old, np.eye(4), 0, dt, 0.2)
+        good = independent(advanced, p, current, np.eye(4))
+        stale.append(np.linalg.norm(bad["mean"][:2] - current[:2]))
+        aligned.append(np.linalg.norm(good["mean"][:2] - current[:2]))
+        uncertainty.append(np.trace(good["covariance"][:2, :2]))
+    return make(
+        "asynchronous-track-alignment",
+        {"velocity_m_s": velocity.tolist(), "process_density": 0.2},
+        {"maximum_stale_bias_m": max(stale), "maximum_aligned_bias_m": max(aligned)},
+        {
+            "lag_s": lag,
+            "stale_bias_m": np.array(stale),
+            "aligned_bias_m": np.array(aligned),
+            "position_variance_m2": np.array(uncertainty),
+        },
+        [
+            curve(
+                "Timestamp mismatch under constant velocity",
+                "lag_s",
+                [("stale_bias_m", "Fuse stale position"), ("aligned_bias_m", "Propagate then fuse")],
+                "Track age (s)",
+                "Position bias (m)",
+            ),
+            curve(
+                "Age-dependent fusion uncertainty",
+                "lag_s",
+                [("position_variance_m2", "Position covariance trace")],
+                "Track age (s)",
+                "Variance (m^2)",
+            ),
+        ],
+    )
