@@ -1,0 +1,7 @@
+{
+  "doppler_std_m_s": 0.2,
+  "known_position_m": [
+    5.0,
+    20.0
+  ]
+}
