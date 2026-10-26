@@ -29,3 +29,18 @@ def test_alignment_clock():
     assert p[0, 0] == pytest.approx(5)
     with pytest.raises(ValueError):
         m.align(x, p, 3, 1)
+
+
+def test_polar_jacobian_difference():
+    x = np.array([12.0, 45.0])
+    z, h = m.polar_observation(x)
+    eps = 1e-5
+    numeric = np.column_stack(
+        [
+            (m.polar_observation(x + np.eye(2)[k] * eps)[0] - m.polar_observation(x - np.eye(2)[k] * eps)[0])
+            / (2 * eps)
+            for k in range(2)
+        ]
+    )
+    assert np.allclose(h, numeric, atol=1e-8)
+    assert z[1] == pytest.approx(np.arctan2(12, 45))

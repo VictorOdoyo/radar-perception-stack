@@ -46,3 +46,16 @@ def align(mean, covariance_value, source_time_s, target_time_s, process_density=
     if stop == start:
         return finite(mean, real=True).copy(), covariance(covariance_value, 4).copy()
     return predict(mean, covariance_value, stop - start, process_density)
+
+
+def polar_observation(position, anchor=(0, 0)):
+    p = finite(position, real=True)
+    a = finite(anchor, real=True)
+    if p.shape != (2,) or a.shape != (2,):
+        raise ValueError("2D target and sensor positions required")
+    delta = p - a
+    r = np.linalg.norm(delta)
+    if r < 1e-6:
+        raise ValueError("bearing unobservable at the sensor origin")
+    x, y = delta
+    return np.array([r, np.arctan2(x, y)]), np.array([[x / r, y / r], [y / r**2, -x / r**2]])
