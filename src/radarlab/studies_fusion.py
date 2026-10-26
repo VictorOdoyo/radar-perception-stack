@@ -281,3 +281,40 @@ def alignment(scale=1, seed=42):
             ),
         ],
     )
+
+
+def innovations(scale=1, seed=42):
+    from .core import stream
+    from .fusion import whiten
+
+    p = np.array([[1.0, 0.8], [0.8, 1.0]])
+    samples = stream(seed, "whitening").multivariate_normal([0, 0], p, 2000 * scale)
+    white = np.array([whiten(e, p) for e in samples])
+    return make(
+        "innovation-whitening",
+        {"covariance": p.tolist(), "samples": len(samples)},
+        {
+            "raw_correlation": float(np.corrcoef(samples.T)[0, 1]),
+            "whitened_correlation": float(np.corrcoef(white.T)[0, 1]),
+            "mean_whitened_energy": float(np.mean(np.sum(white**2, axis=1))),
+        },
+        {"raw_x": samples[:, 0], "raw_y": samples[:, 1], "white_x": white[:, 0], "white_y": white[:, 1]},
+        [
+            curve(
+                "Correlated innovations",
+                "raw_x",
+                [("raw_y", "Raw")],
+                "First residual",
+                "Second residual",
+                style=".",
+            ),
+            curve(
+                "Cholesky-normalized innovations",
+                "white_x",
+                [("white_y", "Whitened")],
+                "First normalized residual",
+                "Second normalized residual",
+                style=".",
+            ),
+        ],
+    )

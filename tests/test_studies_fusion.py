@@ -34,3 +34,9 @@ def test_alignment():
     s = m.alignment()["summary"]
     assert s["maximum_stale_bias_m"] > 3
     assert s["maximum_aligned_bias_m"] < 1e-10
+
+
+def test_innovations():
+    s = m.innovations()["summary"]
+    assert s["raw_correlation"] > 0.7
+    assert abs(s["whitened_correlation"]) < 0.08
