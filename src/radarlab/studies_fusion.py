@@ -53,3 +53,40 @@ def correlation(scale=1, seed=42):
             "Independent Monte Carlo trials at each correlation, two equal unit-covariance unbiased position estimates. Fixed CI weight 0.5."
         ],
     )
+
+
+def weights(scale=1, seed=42):
+    from .fusion import intersection, optimize_intersection
+
+    w = np.linspace(0, 1, 101 * scale)
+    pa = np.diag([1.0, 9])
+    pb = np.diag([9.0, 1])
+    det = []
+    trace = []
+    for value in w:
+        p = intersection([0, 0], pa, [0, 0], pb, value)["covariance"]
+        det.append(np.linalg.det(p))
+        trace.append(np.trace(p))
+    best = optimize_intersection([0, 0], pa, [0, 0], pb)
+    return make(
+        "intersection-weight-design",
+        {"covariance_a": pa.tolist(), "covariance_b": pb.tolist()},
+        {"optimal_weight": best["weight"]},
+        {"weight": w, "determinant": np.array(det), "trace_m2": np.array(trace)},
+        [
+            curve(
+                "Conservative fusion volume objective",
+                "weight",
+                [("determinant", "Covariance determinant")],
+                "CI weight",
+                "Determinant (m^4)",
+            ),
+            curve(
+                "Total marginal position variance",
+                "weight",
+                [("trace_m2", "Covariance trace")],
+                "CI weight",
+                "Variance (m^2)",
+            ),
+        ],
+    )
