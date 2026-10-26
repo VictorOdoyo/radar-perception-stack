@@ -31,7 +31,7 @@ Truth is used for synthesis and post-solve scoring. The tracker receives detecti
 
 ## Evidence and methods
 
-The [computed gallery](docs/results.md) contains all 24 studies with raw arrays, CSV/JSON, plots, HTML reports, source provenance and SHA-256 manifests.
+The [computed gallery](docs/results.md) contains all 34 studies with raw arrays, CSV/JSON, plots, HTML reports, source provenance and SHA-256 manifests.
 
 | Method | Read |
 |---|---|
@@ -72,3 +72,7 @@ uv build
 ```
 
 Publication requires a complete default catalog captured from one clean committed revision. CI checks Linux/Windows, Python 3.11/3.13, formatting, and an installed-wheel scientific report. See [contributing](CONTRIBUTING.md) and [release notes](CHANGELOG.md). MIT licensed.
+
+## Multi-radar extension
+
+[Localization and correlated-track fusion](docs/multisensor-fusion.md) and [statistical consistency](docs/fusion-consistency.md) add ten independent studies covering geometry, mounting error, timestamp alignment, correlation and contaminated measurements.
