@@ -99,3 +99,24 @@ def localize_ranges(anchors, ranges_m, standard_deviation_m, initial_position):
     if not solved.success or np.linalg.cond(information) > 1e10:
         raise ValueError("range geometry is unobservable or solve failed")
     return {"position": solved.x, "covariance": np.linalg.inv(information), "weighted_residual": solved.fun}
+
+
+def velocity_from_doppler(position, anchors, receding_m_s, standard_deviation_m_s=0.2):
+    p = finite(position, real=True)
+    a = finite(anchors, real=True, ndim=2)
+    v = finite(receding_m_s, real=True, ndim=1)
+    s = np.broadcast_to(finite(standard_deviation_m_s, real=True), v.shape)
+    if p.shape != (2,) or a.shape != (len(v), 2) or np.any(s <= 0):
+        raise ValueError("aligned radar Doppler observations required")
+    delta = p - a
+    distance = np.linalg.norm(delta, axis=1)
+    if np.any(distance < 1e-6):
+        raise ValueError("nonzero sensor-target ranges required")
+    h = delta / distance[:, None]
+    weighted = h / s[:, None]
+    information = weighted.T @ weighted
+    if np.linalg.cond(information) > 1e10:
+        raise ValueError("Doppler viewing directions are degenerate")
+    cov = np.linalg.inv(information)
+    mean = cov @ weighted.T @ (v / s)
+    return {"velocity": mean, "covariance": cov}

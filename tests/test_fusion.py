@@ -58,3 +58,13 @@ def test_three_range_localization():
     r = np.linalg.norm(truth - a, axis=1)
     fit = m.localize_ranges(a, r, 0.1, [10, 20])
     assert np.allclose(fit["position"], truth, atol=1e-8)
+
+
+def test_multi_view_velocity():
+    anchors = np.array([[0.0, 0], [40, 0], [0, 40]])
+    p = np.array([10.0, 20.0])
+    truth = np.array([2.0, -3.0])
+    h = p - anchors
+    h /= np.linalg.norm(h, axis=1)[:, None]
+    fit = m.velocity_from_doppler(p, anchors, h @ truth)
+    assert np.allclose(fit["velocity"], truth)
