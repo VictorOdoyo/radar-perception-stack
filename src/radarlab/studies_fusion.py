@@ -358,3 +358,34 @@ def bias(scale=1, seed=42):
             ),
         ],
     )
+
+
+def robust(scale=1, seed=42):
+    from .fusion import localize_ranges, robust_ranges
+
+    a = np.array([[-20.0, 0], [20, 0], [0, -20], [0, 20], [-20, 20], [20, 20]])
+    truth = np.array([3.0, 5.0])
+    bad = np.linspace(0, 12, 61 * scale)
+    ordinary = []
+    protected = []
+    for value in bad:
+        ranges = np.linalg.norm(truth - a, axis=1)
+        ranges[0] += value
+        ordinary.append(np.linalg.norm(localize_ranges(a, ranges, 0.1, [1, 3])["position"] - truth))
+        protected.append(np.linalg.norm(robust_ranges(a, ranges, 0.1, [1, 3])["position"] - truth))
+    return make(
+        "robust-range-localization",
+        {"range_std_m": 0.1, "huber_transition_sigma": 1.5},
+        {"ordinary_error_m": ordinary[-1], "robust_error_m": protected[-1]},
+        {"outlier_m": bad, "ordinary_error_m": np.array(ordinary), "robust_error_m": np.array(protected)},
+        [
+            curve(
+                "Contaminated sensor challenge",
+                "outlier_m",
+                [("ordinary_error_m", "Gaussian least squares"), ("robust_error_m", "Huber loss")],
+                "One range outlier (m)",
+                "Position error (m)",
+            )
+        ],
+        assumptions=["No calibrated Gaussian covariance is claimed for the robust estimate."],
+    )

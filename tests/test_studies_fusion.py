@@ -44,3 +44,8 @@ def test_innovations():
 
 def test_bias():
     assert m.bias()["summary"]["bias_at_3m_m"] > 0.5
+
+
+def test_robust():
+    s = m.robust()["summary"]
+    assert s["robust_error_m"] < s["ordinary_error_m"] / 5
