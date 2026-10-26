@@ -1,0 +1,8 @@
+{
+  "bearing_std_rad": 0.02,
+  "nominal_target_m": [
+    0,
+    80
+  ],
+  "range_std_m": 0.3
+}
