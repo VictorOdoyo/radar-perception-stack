@@ -151,3 +151,15 @@ def correlated(mean_a, cov_a, mean_b, cov_b, cross_covariance):
     solve = np.linalg.solve(joint, h)
     p = np.linalg.inv(h.T @ solve)
     return {"mean": p @ solve.T @ np.r_[a, b], "covariance": p}
+
+
+def intersection(mean_a, cov_a, mean_b, cov_b, weight=0.5):
+    a = finite(mean_a, real=True, ndim=1)
+    b = finite(mean_b, real=True, ndim=1)
+    w = float(finite(weight, real=True))
+    if a.shape != b.shape or not 0 <= w <= 1:
+        raise ValueError("matching estimates and intersection weight in [0,1] required")
+    ia = np.linalg.inv(covariance(cov_a, len(a)))
+    ib = np.linalg.inv(covariance(cov_b, len(a)))
+    p = np.linalg.inv(w * ia + (1 - w) * ib)
+    return {"mean": p @ (w * ia @ a + (1 - w) * ib @ b), "covariance": p, "weight": w}
