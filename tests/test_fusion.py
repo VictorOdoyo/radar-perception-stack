@@ -92,3 +92,8 @@ def test_ci_complementary_information():
     r = m.optimize_intersection([0, 0], np.diag([1, 9]), [0, 0], np.diag([9, 1]))
     assert r["weight"] == pytest.approx(0.5, abs=1e-5)
     assert np.linalg.det(r["covariance"]) < 9
+
+
+def test_consistency_interval():
+    lo, hi = m.consistency_bounds(4, 1000)
+    assert lo < 4 < hi and hi - lo < 1

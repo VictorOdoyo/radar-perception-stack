@@ -1,6 +1,6 @@
 import numpy as np
 
-from .core import finite, positive
+from .core import finite, integer, positive
 
 
 def covariance(value, dimension=None):
@@ -174,3 +174,14 @@ def optimize_intersection(mean_a, cov_a, mean_b, cov_b):
     solved = minimize_scalar(objective, bounds=(0, 1), method="bounded", options={"xatol": 1e-10})
     weight = min([0.0, 1.0, float(solved.x)], key=objective)
     return intersection(mean_a, cov_a, mean_b, cov_b, weight)
+
+
+def consistency_bounds(dimension, trials, confidence=0.95):
+    from scipy.stats import chi2
+
+    integer(dimension)
+    integer(trials)
+    if not 0 < confidence < 1:
+        raise ValueError("confidence in (0,1) required")
+    tail = (1 - confidence) / 2
+    return tuple(float(v / trials) for v in chi2.ppf([tail, 1 - tail], dimension * trials))
